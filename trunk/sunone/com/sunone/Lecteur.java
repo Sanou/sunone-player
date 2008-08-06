@@ -12,7 +12,7 @@ import javax.media.NoPlayerException;
 import javax.media.PrefetchCompleteEvent;
 import javax.media.RealizeCompleteEvent;
 import javax.media.Player;
-public class Lecteur extends Thread{
+public class Lecteur extends Thread {
 	    static int scrollIncrement=0;
 	    public static int ACTIVE=1;//permet d'activer repeat playlist ou media(un seul morceau)
 	    public static int UNACTIVE=0;//contraire de ACTIVE
@@ -34,6 +34,15 @@ public class Lecteur extends Thread{
         public static int PREVIOUS=3;
         public static int NEXT=4;
         public static int fullScrean=0;
+        
+        public enum SunoneStates{
+    		IN_PAUSE,
+    		IN_PLAY,
+    		IN_PREVIOUS,
+    		IN_START,
+    		IN_STOP,
+    		IN_NEXT
+    	}
         
        //Aucune des methodes de cette classe n'est directement invoquée
         // toutes les méthodes sont appélés via la méthode run() qui est invoquée à l'instanciation
