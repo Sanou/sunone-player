@@ -2,19 +2,26 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/AbsoluteLayout.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/customizer.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/jmf.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/mediaplayer.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/multiplayer.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/sound.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/swing-layout-1.0.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lib/swingx.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lookandfeel/skinlf-1.2.12/lib/examples.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lookandfeel/skinlf-1.2.12/lib/nativeskin.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lookandfeel/skinlf-1.2.12/lib/skinlf.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lookandfeel/PgsLookAndFeel-0.5/PgsLookAndFeel.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lookandfeel/PgsLookAndFeel-0.5/PgsLookAndFeel-jide.jar"/>
-	<classpathentry kind="lib" path="D:/Serieux et Cours/Projets/Java/orange_ft/pfe/workspace/ProjetDev/com/sunone/lookandfeel/looks-2_1_3/looks-2.1.3/looks-2.1.3.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/customizer.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/jmf.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/mediaplayer.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/multiplayer.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/sound.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/swing-layout-1.0.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/swingx.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/skinlf-1.2.12/lib/examples.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/skinlf-1.2.12/lib/nativeskin.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/skinlf-1.2.12/lib/skinlf.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/PgsLookAndFeel-0.5/PgsLookAndFeel.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/PgsLookAndFeel-0.5/PgsLookAndFeel-jide.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/looks-2_1_3/looks-2.1.3/looks-2.1.3.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/looks-2_1_3/looks-2.1.3/lib/forms-1.0.7.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/looks-2_1_3/looks-2.1.3/demo/demo.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/looks-2_1_3/looks-2.1.3/demo/fonttest.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lookandfeel/looks-2_1_3/looks-2.1.3/demo/tiny.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-configuration-1.5.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-configuration-1.5-javadoc.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-configuration-1.5-sources.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
