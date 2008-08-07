@@ -66,7 +66,7 @@ public class Playlist {
 	//c'est 2 methodes d'ajouter un ou des medias dans la playlist répèré par CURRENTPLAYLIST a partir de
 	//l'index en cours répèré par CURRENTINDEXMEDIA
 	public static void removeFromPlaylist(int[] index)throws Exception{
-		Interface2.saveData=new String[Interface2.data.length-index.length];
+		GUI.saveData=new String[GUI.data.length-index.length];
 		BufferedReader br=new BufferedReader(new FileReader(new File(Lecteur.CURRENTPLAYLIST.NAME)));
 		String s0=Lecteur.CURRENTPLAYLIST.NAME.substring(0,Lecteur.CURRENTPLAYLIST.NAME.length()-19);
 		PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(new File(s0+"wssederdferdtdfdgetrdfdte.pl"))));
@@ -83,7 +83,7 @@ public class Playlist {
                    k++;
 			       }
 			else{
-				Interface2.saveData[p]=(String)Interface2.data[k][2];
+				GUI.saveData[p]=(String)GUI.data[k][2];
 				p++;
 				k++;
 				pw.print(s);
@@ -102,7 +102,7 @@ public class Playlist {
 				 index[0]=-1;
 				else
 					pw.println();
-				Interface2.saveData[p]=(String)Interface2.data[k][2];
+				GUI.saveData[p]=(String)GUI.data[k][2];
 				p++;
 				k++;
 				pw.print(s);
@@ -146,15 +146,15 @@ public class Playlist {
 		}
 	}
 	public static void saveAsPlaylist(String message)throws Exception{
-		 String s=Interface2.messageDialog2(message);
+		 String s=GUI.messageDialog2(message);
 		if(s!=null){
 			String s2=Lecteur.CURRENTPLAYLIST.NAME.substring(0, Lecteur.CURRENTPLAYLIST.NAME.length()-19);
 			String sa=s2+s+".pl";
 			File f=new File(sa); 
 			copy(new File(Lecteur.CURRENTPLAYLIST.NAME),f);
 			currentNAME=f.toString();
-			Interface2.thisClass.createOpenItem(sa);
-			Interface2.thisClass.createdeleteItem(sa);
+			GUI.thisClass.createOpenItem(sa);
+			GUI.thisClass.createdeleteItem(sa);
 			}
 	}
 	public static void orderByName(){}
@@ -256,9 +256,9 @@ public class Playlist {
 			k++;
 			
 		}
-	if(Interface2.saveData!=null)		
-		for(int j=0;j<Interface2.saveData.length;j++){
-		 o[j][2]=Interface2.saveData[j];
+	if(GUI.saveData!=null)		
+		for(int j=0;j<GUI.saveData.length;j++){
+		 o[j][2]=GUI.saveData[j];
 		  }
 		br.close();
 		f.delete();

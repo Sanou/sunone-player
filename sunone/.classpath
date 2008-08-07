@@ -23,5 +23,14 @@
 	<classpathentry kind="lib" path="com/sunone/lib/commons-configuration-1.5.jar"/>
 	<classpathentry kind="lib" path="com/sunone/lib/commons-configuration-1.5-javadoc.jar"/>
 	<classpathentry kind="lib" path="com/sunone/lib/commons-configuration-1.5-sources.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-logging-1.1.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-logging-1.1.1-sources.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-logging-adapters-1.1.1.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-logging-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/commons-logging-tests.jar"/>
+	<classpathentry kind="lib" path="com/sunone/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

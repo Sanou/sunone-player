@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="MAIN"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs/sunone.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %c{1} - %m%n" />
+		</layout>
+	</appender>	
+	
+	<appender name="STATES"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs/sunone_states.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %c{1} - %m%n" />
+		</layout>
+	</appender>	
+	
+	<appender name="GUI"
+		class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="logs/sunone_gui.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %c{1} - %m%n" />
+		</layout>
+	</appender>	
+
+	<logger name="com.sunone"
+		additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="MAIN" />
+	</logger>
+	<logger name="com.sunone.GUI"
+		additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="GUI" />
+	</logger>
+	<logger name="com.sunone.states"
+		additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="STATES" />
+	</logger>
+	<root>
+		<priority value="ERROR" />
+		<appender-ref ref="MAIN" />
+	</root>
+
+</log4j:configuration>

@@ -28,6 +28,7 @@ public class Lecteur extends Thread {
 	    public  static String CURRENTMEDIA;//contient à chaque fois l'url du fichier en cours(doit être actualisé regulièrement par play) 
         public static int CURRENTINDEXMEDIA;
         public  static int CURRENTMETHODE=0;
+        
         public static int PLAY=0;
         public static int PAUSE=1;
         public static int STOP=2;
@@ -136,43 +137,43 @@ public class Lecteur extends Thread {
               			  if(PLAYSTATUS!=NEXTWASPAUSE){
               				  //quelques initialisations des labels centraux de l'interface graphique
               				  // aussi bien celui du nom de l'artiste que celui de la durée totale de la musique
-                      		  Interface2.thisClass.jLabel6.setText("00:00/00:00");
-                      		  Interface2.thisClass.jLabel.setText(getArtistName(CURRENTMEDIA));
-                    		  Interface2.thisClass.jSlider1.setValue(0);
+                      		  GUI.thisClass.jLabel6.setText("00:00/00:00");
+                      		  GUI.thisClass.jLabel.setText(getArtistName(CURRENTMEDIA));
+                    		  GUI.thisClass.jSlider1.setValue(0);
               		  }
               		  }
               		  
               		  catch(Exception e){}
-             		  Interface2.thisClass.jSlider1.setMaximum((int)dureeTotale);  
+             		  GUI.thisClass.jSlider1.setMaximum((int)dureeTotale);  
               		  player.prefetch();
               		
              		                 	 }
                  	  
               	  public void prefetchComplete(PrefetchCompleteEvent pe){
-              		Interface2.thisClass.reinitialiseComposantsLecteur();
-              		Interface2.thisClass.mediaVisuel = player.getVisualComponent();
-              		if(Interface2.thisClass.mediaVisuel!=null)
-              		Interface2.thisClass.mediaVisuel.addMouseListener(new MouseListener(){
+              		GUI.thisClass.reinitialiseComposantsLecteur();
+              		GUI.thisClass.mediaVisuel = player.getVisualComponent();
+              		if(GUI.thisClass.mediaVisuel!=null)
+              		GUI.thisClass.mediaVisuel.addMouseListener(new MouseListener(){
                           
 						public void mouseClicked(MouseEvent e) {
 							if(e.getClickCount()==2){
 								if(fullScrean==0){
 									fullScrean=1;
-								Interface2.thisClass.fullScrean=Interface2.thisClass.getFullScrean();
+								GUI.thisClass.fullScrean=GUI.thisClass.getFullScrean();
 								Toolkit kit =  Toolkit.getDefaultToolkit(); 
 							    Dimension screen = kit.getScreenSize(); 
-								Interface2.thisClass.fullScrean.setSize(screen);
-								Interface2.thisClass.fullScrean.add(Interface2.thisClass.mediaVisuel);
-								Interface2.thisClass.setVisible(false);
-								Interface2.thisClass.fullScrean.setAlwaysOnTop(true);
-								Interface2.thisClass.fullScrean.setVisible(true);
+								GUI.thisClass.fullScrean.setSize(screen);
+								GUI.thisClass.fullScrean.add(GUI.thisClass.mediaVisuel);
+								GUI.thisClass.setVisible(false);
+								GUI.thisClass.fullScrean.setAlwaysOnTop(true);
+								GUI.thisClass.fullScrean.setVisible(true);
 								
 								}
 								else{fullScrean=0;
-									 Interface2.thisClass.videoPanel.add( Interface2.thisClass.mediaVisuel, BorderLayout.CENTER );
-									 Interface2.thisClass.fullScrean.setVisible(false);
-									 Interface2.thisClass.setVisible(true);
-									 Interface2.thisClass.fullScrean=null;
+									 GUI.thisClass.videoPanel.add( GUI.thisClass.mediaVisuel, BorderLayout.CENTER );
+									 GUI.thisClass.fullScrean.setVisible(false);
+									 GUI.thisClass.setVisible(true);
+									 GUI.thisClass.fullScrean=null;
 									  
 									
 								}
@@ -188,16 +189,16 @@ public class Lecteur extends Thread {
 						public void mouseReleased(MouseEvent e) {}
               			
               		});
-              		player.getGainControl().setDB(-70+Interface2.thisClass.jSlider.getValue());
-              		 if ( Interface2.thisClass.mediaVisuel != null ){
-              			Interface2.thisClass.jContentPane.add(Interface2.thisClass.getJPanel4(), BorderLayout.CENTER);
-              	        Interface2.thisClass.videoPanel.add( Interface2.thisClass.mediaVisuel, BorderLayout.CENTER );
-              	        Interface2.thisClass.videoPanel.setVisible(true);
-              	        Interface2.thisClass.videoPanel.setTitle("SunOne");
-              	        Interface2.thisClass.videoPanel.pack();
-              	      if(Interface2.thisClass.fullScrean!=null){
-  						Interface2.thisClass.fullScrean.add(Interface2.thisClass.mediaVisuel);
-  						Interface2.thisClass.fullScrean.setVisible(true);
+              		player.getGainControl().setDB(-70+GUI.thisClass.jSlider.getValue());
+              		 if ( GUI.thisClass.mediaVisuel != null ){
+              			GUI.thisClass.jContentPane.add(GUI.thisClass.getJPanel4(), BorderLayout.CENTER);
+              	        GUI.thisClass.videoPanel.add( GUI.thisClass.mediaVisuel, BorderLayout.CENTER );
+              	        GUI.thisClass.videoPanel.setVisible(true);
+              	        GUI.thisClass.videoPanel.setTitle("SunOne");
+              	        GUI.thisClass.videoPanel.pack();
+              	      if(GUI.thisClass.fullScrean!=null){
+  						GUI.thisClass.fullScrean.add(GUI.thisClass.mediaVisuel);
+  						GUI.thisClass.fullScrean.setVisible(true);
                 		}
               	     
               		 }  
@@ -209,11 +210,11 @@ public class Lecteur extends Thread {
                     	Thread.sleep(70);
                     	}
                     String timeTotal=conversion((int)player.getDuration().getSeconds());
-                    Interface2.thisClass.jTable.setValueAt(timeTotal, CURRENTINDEXMEDIA, 2);
-                    Interface2.thisClass.jTable.setValueAt(Interface2.fleche,CURRENTINDEXMEDIA, 0);
+                    GUI.thisClass.jTable.setValueAt(timeTotal, CURRENTINDEXMEDIA, 2);
+                    GUI.thisClass.jTable.setValueAt(GUI.fleche,CURRENTINDEXMEDIA, 0);
                     if(CURRENTINDEXMEDIA!=0)
-                    Interface2.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA-1, 0);
-                    Interface2.thisClass.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(CURRENTINDEXMEDIA/4));
+                    GUI.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA-1, 0);
+                    GUI.thisClass.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(CURRENTINDEXMEDIA/4));
                     x+=x;
                     scrollIncrement=0;
                     if(PLAYSTATUS==NEXTWASPAUSE)
@@ -225,8 +226,8 @@ public class Lecteur extends Thread {
                     {
                     	Thread.sleep(1000);
                     	int i=(int)player.getMediaTime().getSeconds();
-                    	Interface2.thisClass.jSlider1.setValue(i);                   	
-                    	Interface2.thisClass.jLabel6.setText(conversion(i)+"/"+timeTotal);
+                    	GUI.thisClass.jSlider1.setValue(i);                   	
+                    	GUI.thisClass.jLabel6.setText(conversion(i)+"/"+timeTotal);
                     }              
                    
         		  }
@@ -266,7 +267,7 @@ public class Lecteur extends Thread {
         public static void stop2(){
         	PLAYSTATUS=NEXTWASSTOP;
         	player.stop();
-        	 Interface2.thisClass.reinitialiseComposantsLecteur();
+        	 GUI.thisClass.reinitialiseComposantsLecteur();
         	
         }
         public static void pause(){
@@ -278,9 +279,9 @@ public class Lecteur extends Thread {
         public static void previous()throws Exception{
         	if(REPEATMEDIA==ACTIVE)
         	{ REPEATMEDIA=UNACTIVE;
-        	Interface2.thisClass.repeatTrack.setState(false);
+        	GUI.thisClass.repeatTrack.setState(false);
         	}
-        	Interface2.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
+        	GUI.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
         	if(CURRENTINDEXMEDIA==0){
         	 if(REPEATPLAYLIST==ACTIVE){
         		 CURRENTINDEXMEDIA=CURRENTPLAYLIST.getNumberOfMedia()-1;
@@ -297,9 +298,9 @@ public class Lecteur extends Thread {
         public static void next()throws Exception{
         	if(REPEATMEDIA==ACTIVE)
         	{ REPEATMEDIA=UNACTIVE;
-              Interface2.thisClass.repeatTrack.setState(false);        	
+              GUI.thisClass.repeatTrack.setState(false);        	
         	}
-        	Interface2.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
+        	GUI.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
         	if(CURRENTINDEXMEDIA==CURRENTPLAYLIST.getNumberOfMedia()-1){
         	 if(REPEATPLAYLIST==ACTIVE)
         	 {

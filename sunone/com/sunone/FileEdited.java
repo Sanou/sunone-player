@@ -1,11 +1,9 @@
 package com.sunone;
 //import java.io.*;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import org.apache.commons.configuration.Configuration;
 //import java.net.URL;
 public class FileEdited {
     public static BufferedReader openFile(String filename,int positionline)throws Exception{
@@ -17,34 +15,38 @@ public class FileEdited {
 		br.readLine();}
 		return br;
        }
-    //public static void closeFile(String filename)throws Exception{
-    	//BufferedReader br =new BufferedReader(new FileReader(new File(filename)));  	
-    	 //br.close();
-    //}
-    public static void closeFile1(String filename)throws Exception{
-    	PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(new File(filename))));
-    	pw.println(Interface2.lf);
-    	pw.println(Playlist.currentNAME);
-    	pw.println(Lecteur.CURRENTINDEXMEDIA);
-    	pw.println(Lecteur.REPEATPLAYLIST);
-    	pw.print(Lecteur.REPEATMEDIA);
-    	if(Interface2.currentDirectory!=null)
-    		{pw.println();
-    		pw.print(Interface2.currentDirectory.toString());
+   
+    public static void closeFile1(Configuration configuration)throws Exception{
+    	//PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(new File(filename))));
+    	configuration.setProperty("com.sunone.playlist.currentname", GUI.lf);
+    	configuration.setProperty("com.sunone.playlist.currentname", Playlist.currentNAME);
+    	configuration.setProperty("com.sunone.playlist.currentindex_of_media", Lecteur.CURRENTINDEXMEDIA);
+    	configuration.setProperty("com.sunone.playlist.repeatplaylist.activation", Lecteur.REPEATPLAYLIST);
+    	configuration.setProperty("com.sunone.playlist.repeatmedia.activation", Lecteur.REPEATMEDIA);
+    	//pw.println(GUI.lf);
+    	//pw.println(Playlist.currentNAME);
+    	//pw.println(Lecteur.CURRENTINDEXMEDIA);
+    	//pw.println(Lecteur.REPEATPLAYLIST);
+    	//pw.print(Lecteur.REPEATMEDIA);
+    	if(GUI.currentDirectory!=null)
+    		{
+    		//pw.println();
+    		//pw.print(GUI.currentDirectory.toString()); 
+    		configuration.setProperty("com.sunone.currentdirectory", GUI.currentDirectory.toString());
     		}
-    	pw.close();
+    	//pw.close();
     }
-    public static void closeFile2(String filename)throws Exception{
-    	BufferedReader br =new BufferedReader(new FileReader(new File(filename))); 
-    	Interface2.lf=Integer.parseInt(br.readLine());
-    	Playlist.currentNAME=br.readLine();
-    	Lecteur.CURRENTINDEXMEDIA=Integer.parseInt(br.readLine());
-    	Lecteur.REPEATPLAYLIST=Integer.parseInt(br.readLine());
-    	Lecteur.REPEATMEDIA=Integer.parseInt(br.readLine());
-    	String Maimouna=br.readLine();
-    	if(Maimouna!=null)
-    		Interface2.currentDirectory=new File(Maimouna);
-    	br.close();
+    public static void closeFile2(Configuration configuration)throws Exception{
+    	//BufferedReader br =new BufferedReader(new FileReader(new File(filename))); 
+    	
+    	GUI.lf=configuration.getInt("");
+    	Playlist.currentNAME=configuration.getString("com.sunone.playlist.currentname");
+    	Lecteur.CURRENTINDEXMEDIA=configuration.getInt("com.sunone.playlist.current_indexof_media");
+    	Lecteur.REPEATPLAYLIST=configuration.getInt("com.sunone.playlist.repeatplaylist.activation");
+    	Lecteur.REPEATMEDIA=configuration.getInt("com.sunone.playlist.repeatmedia.activation");
+    	String Maimouna=configuration.getString("com.sunone.currentdirectory");
+    	if(Maimouna!=null && !Maimouna.equals(""))
+    		GUI.currentDirectory=new File(Maimouna);
     }
     
 }
