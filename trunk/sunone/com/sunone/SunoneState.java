@@ -13,7 +13,7 @@ import com.sunone.Lecteur.SunoneStates;
 public abstract class SunoneState {
 	
 	
-	
+	private SunoneStates state;
 	private static  HashMap<SunoneStates, SunoneState> stateMap;
 	
 static void init(Configuration configuration) throws SunoneException{
@@ -95,5 +95,13 @@ static void init(Configuration configuration) throws SunoneException{
 	}
 	public SunoneStates pause() throws SunoneException{
 		throw new SunoneException("PUserState Error: method exitPagurezone not implemented in PUserState: "+getClass().getName());
+	}
+
+	public SunoneStates getState() {
+		return state;
+	}
+
+	public void setState(SunoneStates state) {
+		this.state = state;
 	}
 }
