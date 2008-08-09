@@ -2,8 +2,11 @@ package com.sunone;
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
+
+import org.apache.log4j.Logger;
 public class Playlist {
 	//Player player=null;
+	static Logger logger =Logger.getLogger(Playlist.class);
 	public Playlist(String s){
 		NAME=s;
 	}
@@ -13,12 +16,16 @@ public class Playlist {
 	//contient le nom de la playlist en cours de lecture
 	public static String currentNAME;
 	public static void addToPlaylist(){
+		if(logger.isDebugEnabled())
+			logger.debug("Add to playlist (methode without parameters).");
 		JFileChooser choixFichier=new JFileChooser();
 		choixFichier.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		choixFichier.setMultiSelectionEnabled(true);
 		
 	}	
 	public boolean isEmpty()throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Verifying if playlist is empty or not.");
 		BufferedReader br=new BufferedReader(new FileReader(new File(this.NAME)));
 		if(br.readLine()!=null)
 		{
@@ -32,6 +39,8 @@ public class Playlist {
 			}
 	}
 	public static void copy(File fsource,File fdestination)throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("copy - source - destination.");
 		PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(fdestination)));
 		BufferedReader br=new BufferedReader(new FileReader(fsource));
 		String st;
@@ -46,6 +55,8 @@ public class Playlist {
 		br.close();
 	}
 	public static void addToPlaylist(File[] filesnames)throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Add to playlist (with parameters - filenames[]).");
 		File f=new File(Lecteur.CURRENTPLAYLIST.NAME);
 		File Fe=new File(Lecteur.CURRENTPLAYLIST.NAME.substring(0, Lecteur.CURRENTPLAYLIST.NAME.length()-19)+"wssederdferdtdfdgetrdfdte.pl");
 		PrintWriter br=new PrintWriter(new BufferedWriter(new FileWriter(Fe)));
@@ -66,6 +77,8 @@ public class Playlist {
 	//c'est 2 methodes d'ajouter un ou des medias dans la playlist répèré par CURRENTPLAYLIST a partir de
 	//l'index en cours répèré par CURRENTINDEXMEDIA
 	public static void removeFromPlaylist(int[] index)throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Remove from playlist.");
 		GUI.saveData=new String[GUI.data.length-index.length];
 		BufferedReader br=new BufferedReader(new FileReader(new File(Lecteur.CURRENTPLAYLIST.NAME)));
 		String s0=Lecteur.CURRENTPLAYLIST.NAME.substring(0,Lecteur.CURRENTPLAYLIST.NAME.length()-19);
@@ -115,12 +128,16 @@ public class Playlist {
 		(new File(s0+"wssederdferdtdfdgetrdfdte.pl")).renameTo(new File(Lecteur.CURRENTPLAYLIST.NAME));
 	}
 	public static void removePlaylist(String s){
+		if(logger.isDebugEnabled())
+			logger.debug("Remove playlist.");
 		if(s.equals(currentNAME))
 			currentNAME=Lecteur.CURRENTPLAYLIST.NAME;
 		    (new File(s)).delete();
 	}
 	// Vide la current playlist et attend que vous charger la nouvelle
 	public static void newPlaylist()throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("New playlist.");
 		if(Lecteur.CURRENTPLAYLIST.isEmpty())
 		{     			 
 			    savePlaylist("Would you like to save the Current Playlist");
@@ -138,6 +155,8 @@ public class Playlist {
 		pw.close();
 	}
 	public static void savePlaylist(String message)throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Save playlist.");
 		if(currentNAME.equals(Lecteur.CURRENTPLAYLIST.NAME)==false){
 			copy(new File(Lecteur.CURRENTPLAYLIST.NAME),new File(currentNAME));
 				}
@@ -146,7 +165,9 @@ public class Playlist {
 		}
 	}
 	public static void saveAsPlaylist(String message)throws Exception{
-		 String s=GUI.messageDialog2(message);
+		if(logger.isDebugEnabled())
+			logger.debug("Save as playlist.");
+		String s=GUI.messageDialog2(message);
 		if(s!=null){
 			String s2=Lecteur.CURRENTPLAYLIST.NAME.substring(0, Lecteur.CURRENTPLAYLIST.NAME.length()-19);
 			String sa=s2+s+".pl";
@@ -160,7 +181,10 @@ public class Playlist {
 	public static void orderByName(){}
 	public static void orderByArtist(){}
 	public static void orderBySize(){}
+	
 	public static void openPlaylist(File sanou)throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Open playlist.");
 		if(Lecteur.CURRENTPLAYLIST.isEmpty())
 		{      
 			    savePlaylist("Current Playlist isn't save ; to save now Enter the Playlist Name");
@@ -174,9 +198,13 @@ public class Playlist {
 	}
 	public static void clear(){}
 	public String getName(){
+		if(logger.isDebugEnabled())
+			logger.debug("Get Name.");
 		return NAME;
 	}
 	public int getNumberOfMedia(){
+		if(logger.isDebugEnabled())
+			logger.debug("Get Number Of Media.");
 		int i=0;
 		try{
 		BufferedReader br=new BufferedReader(new FileReader(new File(NAME)));
@@ -187,6 +215,8 @@ public class Playlist {
 	}
 	@SuppressWarnings("deprecation")
 	public  void cutPlaylist()throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Cut Playlist.");
 		String st;
 		PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(new File(this.NAME+".dec"))));
 		BufferedReader br=new BufferedReader(new FileReader(new File(this.NAME)));
@@ -222,6 +252,8 @@ public class Playlist {
 	}		
 	@SuppressWarnings("unchecked")
 	public Object[][] loadingPlaylist()throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Loading Playlist.");
 		File f=new File(this.NAME+".dec");
 		Object[][] o=null;Vector v=new Vector();
 		
