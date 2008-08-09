@@ -6,7 +6,6 @@ import java.io.*;
 import javax.media.*;
 import javax.swing.*;
 import javax.swing.event.*;
-//import javax.sound.midi.*;
 import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.Component;
