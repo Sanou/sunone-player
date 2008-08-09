@@ -223,7 +223,6 @@ public class Playlist {
 	@SuppressWarnings("unchecked")
 	public Object[][] loadingPlaylist()throws Exception{
 		File f=new File(this.NAME+".dec");
-		System.out.print(this.NAME);
 		Object[][] o=null;Vector v=new Vector();
 		
 	//	Vector v2=new Vector();
