@@ -574,8 +574,11 @@ public class GUI extends JXFrame{
    //table assez complexe qui utilise le GridBagLayout comme gestionnaire
    //et
    private JPanel getJPanel1() {
+	   if(logger.isDebugEnabled())
+		   logger.debug("1) - Adding Panel 1 with ALL Button, displayed info and volume trackbar.");
 			if (jPanel1 == null) {
 			jLabel6 = new JLabel();
+			logger.info("Adding current time Label: (initially: 00:00/00:00");
 			jLabel6.setText("00:00/00:00");
 			jLabel6.setFont(new Font("Arial", Font.BOLD, 12));		
 			jLabel6.setForeground(Color.white);
@@ -613,7 +616,6 @@ public class GUI extends JXFrame{
 			gridBagConstraints14.gridheight=1;
 			gridBagConstraints14.gridwidth=6;
 			gridBagConstraints14.ipadx = 210;
-			//gridBagConstraints14.fill=GridBagConstraints.HORIZONTAL;
 			GridBagConstraints gridBagConstraints13 = new GridBagConstraints();
 			gridBagConstraints13.insets = new Insets(0, 62, 0, -3);
 			gridBagConstraints13.gridx=2;
@@ -900,6 +902,7 @@ public class GUI extends JXFrame{
 
 
 	private JSlider getJSlider() {
+		logger.info("Adding Volume Slider.");
 		if (jSlider == null) {
 			jSlider = new JSlider();
 			jSlider.setOrientation(JSlider.VERTICAL);
@@ -928,6 +931,7 @@ public class GUI extends JXFrame{
 	}
 
 	private JSlider getJSlider1() {
+		logger.info("Adding Media Progression indicator Slider.");
 		if (jSlider1 == null) {
 			jSlider1 = new JSlider();
 			jSlider1.setPreferredSize(new Dimension(215, 10));
@@ -1630,9 +1634,7 @@ String themepack = args;
 	public static void main(String[] args) throws Exception{	
 		
 		 try{
-			 SunoneLogic.getInstance().init();
-			   //configuration = new PropertiesConfiguration(SUNONE_CONFIGURATION_FILE);
-			 //  String st=new File("com\\sunone\\CloseFile.so").toURL().getPath().toString();
+			   SunoneLogic.getInstance().init();
 			   FileEdited.restoreSunoneParameters(configuration); 
 			   }
 		 catch(Exception ex){}
@@ -1644,7 +1646,6 @@ String themepack = args;
 				    thisClass.addWindowListener(new WindowListener(){
 				    	  public void windowClosing(WindowEvent e){
 				   		   try{
-				   		  // String st=(new File("com\\sunone\\CloseFile.so")).toURL().getPath().toString();
 				   		   FileEdited.saveSunoneParameters(configuration);
 				   		   }catch(Exception ex){}
 				   		   System.exit(0);
@@ -1700,22 +1701,25 @@ String themepack = args;
 	}
 	@SuppressWarnings("deprecation")
 	private void initialize() throws Exception{
+		if(logger.isDebugEnabled())
+			logger.debug("Initialising player.");
 		this.setSize(765, 650);
 		this.setResizable(false);
 		this.setMinimumSize(new Dimension(765, 650));
 		this.setMaximumSize(new Dimension(765, 7540));
-		//ajout de l'image d'arrière plan de SunOne Player
+		logger.info("--Adding sunone backgroud image.");
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(configuration.getString("com.sunone.images.sunone"))));
-		// la fleche d'indication de la playlist encours
+		logger.info("--Adding current track indicator");
 		fleche=new ImageIcon(getClass().getResource(configuration.getString("com.sunone.images.fleche")));	
-		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		logger.info("--Setting sunone background color : 204, 255, 224.");
 		this.setBackground(new Color(204, 255, 224));
-		//recuperation de l'URL de la currentplaylist
+		logger.info("--Retrieving current playlist name.");
 		String st=new File(configuration.getString("com.sunone.playlist.currentplaylist")).toURL().getPath().toString();
 		Lecteur.CURRENTPLAYLIST=new Playlist(st);
-		// chargement du grand Panel
+		logger.info("--Lodding Principal panel...");
 		this.setContentPane(getJContentPane());
 		this.setJMenuBar(getJJMenuBar());
+		logger.info("--Setting title \"SunOne  Player\"...");
 		this.setTitle("SunOne  Player");
 		initialize2();
 	}
