@@ -3,7 +3,6 @@ package com.sunone;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 //import java.net.URL;
@@ -21,6 +20,8 @@ public class FileEdited {
    
     public static void saveSunoneParameters(PropertiesConfiguration configuration)throws Exception{
     	//PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(new File(filename))));
+    	configuration.setAutoSave(true);
+    	configuration.save();
     	if(logger.isDebugEnabled())
 			logger.debug("Saving Sunone Parameters");
     		logger.debug("-->LOOK AND FEEL: "+GUI.lf);
@@ -39,8 +40,9 @@ public class FileEdited {
     		logger.debug("-->CURRENT FILE CHOOSER DIRECTORY: "+GUI.currentDirectory);
     		configuration.setProperty("com.sunone.currentdirectory", GUI.currentDirectory.toString());
     		}
+    	configuration.save();
     }
-    public static void restoreSunoneParameters(Configuration configuration)throws Exception{
+    public static void restoreSunoneParameters(PropertiesConfiguration configuration)throws Exception{
     	 
     	if(logger.isDebugEnabled())
 			logger.debug("Restoring Sunone Parameters");
