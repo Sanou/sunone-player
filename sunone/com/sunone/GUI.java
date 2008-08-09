@@ -32,25 +32,15 @@ import javax.imageio.ImageIO;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalTheme;
 
-import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.jdesktop.swingx.*;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import javax.swing.filechooser.FileFilter;
-//import org.jdesktop.swingx.autocomplete.Configurator;
-//import org.jdesktop.swingx.border.DropShadowBorder;
-//import org.jdesktop.swingx.calendar.*;
 import org.jdesktop.swingx.decorator.*;
-//import org.jdesktop.swingx.event.ProgressEvent;
-//import org.jdesktop.swingx.tips.*;
-//import org.jdesktop.swingx.treetable.*;
-//import org.jdesktop.swingx.tips.TipOfTheDayModel.*;
-//import org.netbeans.lib.awtextra.*;
-
 import com.l2fprod.gui.plaf.skin.Skin;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
-//import com.l2fprod.gui.plaf.skin.SkinUtils;
 import com.l2fprod.util.OS;
 
 
@@ -72,7 +62,7 @@ import javax.swing.JOptionPane;
 
 public class GUI extends JXFrame{
 	
-	public static Configuration configuration;
+	public static PropertiesConfiguration configuration;
 	Logger logger =Logger.getLogger(GUI.class);
 	
 	public Component mediaVisuel;
@@ -397,7 +387,7 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e) {
 					try{
 				   		  // String st=(new File("com\\sunone\\CloseFile.so")).toURL().getPath().toString();
-				   		   FileEdited.closeFile1(configuration);
+				   		   FileEdited.saveSunoneParameters(configuration);
 				   		   }catch(Exception ex){}
 				   		   System.exit(0);
 					
@@ -1644,7 +1634,7 @@ String themepack = args;
 			 SunoneLogic.getInstance().init();
 			   //configuration = new PropertiesConfiguration(SUNONE_CONFIGURATION_FILE);
 			 //  String st=new File("com\\sunone\\CloseFile.so").toURL().getPath().toString();
-			   FileEdited.closeFile2(configuration); 
+			   FileEdited.restoreSunoneParameters(configuration); 
 			   }
 		 catch(Exception ex){}
 		lookAndFeel(lf);
@@ -1656,7 +1646,7 @@ String themepack = args;
 				    	  public void windowClosing(WindowEvent e){
 				   		   try{
 				   		  // String st=(new File("com\\sunone\\CloseFile.so")).toURL().getPath().toString();
-				   		   FileEdited.closeFile1(configuration);
+				   		   FileEdited.saveSunoneParameters(configuration);
 				   		   }catch(Exception ex){}
 				   		   System.exit(0);
 				   	   }
