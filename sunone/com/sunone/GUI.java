@@ -965,6 +965,8 @@ public class GUI extends JXFrame{
 	}
 
 	private JScrollPane getJScrollPane()throws Exception {
+		if(logger.isDebugEnabled())
+			logger.debug("2) - Adding Panel 2 with playlist Table.");
 		if (jScrollPane == null) {
 			jScrollPane = new JScrollPane();
 			jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -1517,6 +1519,8 @@ public class GUI extends JXFrame{
 	
 	
 	public JPanel getJPanel3() {
+		if(logger.isDebugEnabled())
+			logger.debug("3) - Adding Panel 3 with combo menu.");
 		if (jPanel3 == null) {
 			jPanel3 = new JPanel();
 			jPanel3.setLayout(new GridBagLayout());

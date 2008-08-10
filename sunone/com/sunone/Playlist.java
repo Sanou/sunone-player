@@ -157,7 +157,7 @@ public class Playlist {
 	public static void savePlaylist(String message)throws Exception{
 		if(logger.isDebugEnabled())
 			logger.debug("Save playlist.");
-		if(currentNAME.equals(Lecteur.CURRENTPLAYLIST.NAME)==false){
+		if(currentNAME!=null && currentNAME.equals(Lecteur.CURRENTPLAYLIST.NAME)==false){
 			copy(new File(Lecteur.CURRENTPLAYLIST.NAME),new File(currentNAME));
 				}
 		else{
