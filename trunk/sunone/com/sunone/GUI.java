@@ -1607,9 +1607,9 @@ public class GUI extends JXFrame{
 			
 String args;
 if(lf==2)
-	args="com\\sunone\\lookandfeel\\skinlf-1.2.12\\lib\\architectBluethemepack.zip";
+	args="resources\\lookandfeel\\skinlf-1.2.12\\lib\\architectBluethemepack.zip";
 else
-	args="com\\sunone\\lookandfeel\\skinlf-1.2.12\\lib\\themepack.zip";
+	args="resources\\lookandfeel\\skinlf-1.2.12\\lib\\themepack.zip";
 String themepack = args;
 			      if (themepack.endsWith(".xml")) {
 			        SkinLookAndFeel.setSkin(
