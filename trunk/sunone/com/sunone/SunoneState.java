@@ -16,6 +16,7 @@ public abstract class SunoneState {
 	private SunoneStates state;
 	private static  HashMap<SunoneStates, SunoneState> stateMap;
 	
+@SuppressWarnings("unchecked")
 static void init(Configuration configuration) throws SunoneException{
 		
 		Iterator iterator = configuration.getKeys();
