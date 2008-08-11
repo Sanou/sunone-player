@@ -6,7 +6,6 @@ import java.io.*;
 import javax.media.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
@@ -68,7 +67,7 @@ public class GUI extends JXFrame{
 	public static ImageIcon fleche;
 	public static String[] saveData={" "," "," "," "};
 	private static final long serialVersionUID = 1L;
-	public static GUI thisClass=null;
+	private static GUI instance=null;
 	static Boolean b;
 	static Lecteur lecteur=null;
 	public JPanel jContentPane = null;
@@ -116,6 +115,7 @@ public class GUI extends JXFrame{
 	private JMenuItem jMenuItem12 = null;
 	private JMenuItem jMenuItem13 = null;
 	private JMenuItem jMenuItem14 = null;
+	private JMenuItem Defaultlf=null;
 	private JMenu jMenu5 = null;
 	private JCheckBoxMenuItem jMenuItem15 = null;
 	private JCheckBoxMenuItem jMenuItem16 = null;
@@ -126,6 +126,7 @@ public class GUI extends JXFrame{
 	public JLabel jLabel = null;
 	public JLabel jLabel6 = null;
     public JWindow fullScrean=null;
+    
     public JWindow getFullScrean(){
     	if(fullScrean==null){
     		fullScrean=new JWindow();
@@ -138,17 +139,17 @@ public class GUI extends JXFrame{
 			jJMenuBar.setPreferredSize(new Dimension(35, 20));
 			jJMenuBar.setBackground(SystemColor.controlHighlight);
 			jJMenuBar.setForeground(Color.cyan);
-			jJMenuBar.add(getJMenu());
-			jJMenuBar.add(getJMenu1());
-			jJMenuBar.add(getJMenu2());
-			jJMenuBar.add(getJMenu3());
+			jJMenuBar.add(getFileMenu());
+			jJMenuBar.add(getPlayerMenu());
+			jJMenuBar.add(getPlaylistMenu());
+			jJMenuBar.add(getSkinsMenu());
 			jJMenuBar.add(getJMenu4());
   			
 		}
 		return jJMenuBar;
 	}
 
-	private JMenu getJMenu() {
+	private JMenu getFileMenu() {
 		if (jMenu == null) {
 			jMenu = new JMenu();
 			jMenu.setPreferredSize(new Dimension(30, 15));
@@ -170,7 +171,7 @@ public class GUI extends JXFrame{
 		return jMenu;
 	}
 
-	private JMenu getJMenu1() {
+	private JMenu getPlayerMenu() {
 		if (jMenu1 == null) {
 			jMenu1 = new JMenu();
 			jMenu1.setPreferredSize(new Dimension(45, 15));
@@ -186,7 +187,8 @@ public class GUI extends JXFrame{
 		}
 		return jMenu1;
 	}
-	private JMenu getJMenu2() {
+	
+	private JMenu getPlaylistMenu() {
 		if (jMenu2 == null) {
 			jMenu2 = new JMenu();
 			jMenu2.setFocusable(true);
@@ -209,7 +211,7 @@ public class GUI extends JXFrame{
 		return jMenu2;
 	}
 
-	private JMenu getJMenu3() {
+	private JMenu getSkinsMenu() {
 		if (jMenu3 == null) {
 			jMenu3 = new JMenu();
 			jMenu3.setFocusable(true);
@@ -224,14 +226,14 @@ public class GUI extends JXFrame{
 		}
 		return jMenu3;
 	}
-	private JMenuItem Defaultlf=null;
+	
 	private JMenuItem getDefaultlf() {
 		if (Defaultlf == null) {
 			Defaultlf = new JMenuItem();
 			Defaultlf.setText("Default Skin");
 			Defaultlf.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					JOptionPane.showMessageDialog(thisClass,"The Skin will be reloaded on the next start");
+					JOptionPane.showMessageDialog(instance,"The Skin will be reloaded on the next start");
 				    lf=0;
 				}
 				
@@ -246,7 +248,7 @@ public class GUI extends JXFrame{
 			lf0.setText("Skin 1");
 			lf0.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-						JOptionPane.showMessageDialog(thisClass,"The Skin will be reloaded on the next start");
+						JOptionPane.showMessageDialog(instance,"The Skin will be reloaded on the next start");
 				         lf=1;	
 				}
 				
@@ -261,7 +263,7 @@ public class GUI extends JXFrame{
 			lf1.setText("Skin 2");
 			lf1.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					JOptionPane.showMessageDialog(thisClass,"The Skin will be reloaded on the next start");
+					JOptionPane.showMessageDialog(instance,"The Skin will be reloaded on the next start");
 				     lf=2;	
 				}
 				
@@ -495,8 +497,8 @@ public class GUI extends JXFrame{
 		    			
 						if(lecteur!=null){
 						Lecteur.player.stop();
-						thisClass.videoPanel.setVisible(false);
-					    thisClass.reinitialiseComposantsLecteur();
+						instance.videoPanel.setVisible(false);
+					    instance.reinitialiseComposantsLecteur();
                         lecteur.stop();
                         lecteur=null;
                         System.gc();
@@ -717,11 +719,11 @@ public class GUI extends JXFrame{
 			try {
 			    image = ImageIO.read(getClass().getResource(configuration.getString("com.sunone.images.fond1")));
 			    jPanel1.setImage(image);
-			    jPanel1.add(getJButton(), gridBagConstraints1);
-			    jPanel1.add(getJButton1(), gridBagConstraints2);
-			    jPanel1.add(getJButton2(), gridBagConstraints3);
-			    jPanel1.add(getJButton3(), gridBagConstraints4);
-			    jPanel1.add(getJButton4(), gridBagConstraints5);
+			    jPanel1.add(getPreviousButton(), gridBagConstraints1);
+			    jPanel1.add(getPlayButton(), gridBagConstraints2);
+			    jPanel1.add(getPauseButton(), gridBagConstraints3);
+			    jPanel1.add(getStopButton(), gridBagConstraints4);
+			    jPanel1.add(getNextButton(), gridBagConstraints5);
 			    jPanel1.add(jLabel5, gridBagConstraints6);
 			    jPanel1.add(jLabel1, gridBagConstraints);
 			    jPanel1.add(jLabel2,  gridBagConstraints10);
@@ -756,7 +758,7 @@ public class GUI extends JXFrame{
 		return jPanel2;
 	}
 
-	private JButton getJButton() {
+	private JButton getPreviousButton() {
 		if(logger.isDebugEnabled())
 			logger.debug("Adding \"previous\" button...");
 		if (jButton == null) {
@@ -787,7 +789,7 @@ public class GUI extends JXFrame{
 	}
 
 
-	private JButton getJButton1() {
+	private JButton getPlayButton() {
 		if(logger.isDebugEnabled())
 			logger.debug("Adding \"play\" button...");
 		if (jButton1 == null) {
@@ -813,7 +815,7 @@ public class GUI extends JXFrame{
 		}
 		return jButton1;
 	}
-	private JButton getJButton2() {
+	private JButton getPauseButton() {
 		if(logger.isDebugEnabled())
 			logger.debug("Adding \"pause\" button...");
 		if (jButton2 == null) {
@@ -849,7 +851,7 @@ public class GUI extends JXFrame{
 	}
 
 
-	private JButton getJButton3() {
+	private JButton getStopButton() {
 		if(logger.isDebugEnabled())
 			logger.debug("Adding \"stop\" button...");
 		if (jButton3 == null) {
@@ -866,8 +868,8 @@ public class GUI extends JXFrame{
 						lecteur.stop();
                         lecteur=null;
                         System.gc();
-						thisClass.videoPanel.setVisible(false);
-						thisClass.reinitialiseComposantsLecteur();
+						instance.videoPanel.setVisible(false);
+						instance.reinitialiseComposantsLecteur();
                         
 					}
 				    
@@ -879,7 +881,7 @@ public class GUI extends JXFrame{
 		}
 		return jButton3;
 	}
-	private JButton getJButton4() {
+	private JButton getNextButton() {
 		if(logger.isDebugEnabled())
 			logger.debug("Adding \"next\" button...");
 		if (jButton4 == null) {
@@ -1033,12 +1035,12 @@ public class GUI extends JXFrame{
 		    	@SuppressWarnings("deprecation")
 				public void mouseClicked(MouseEvent e){
 		    		if(e.getClickCount()==2){
-		    			GUI.thisClass.jTable.setValueAt(" ",Lecteur.CURRENTINDEXMEDIA, 0);
+		    			GUI.instance.jTable.setValueAt(" ",Lecteur.CURRENTINDEXMEDIA, 0);
 		    			Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow();
 		    			Lecteur.CURRENTMETHODE=Lecteur.PLAY;
 		    			try{ 
 							if(lecteur instanceof Lecteur){
-							thisClass.remove(videoPanel);
+							instance.remove(videoPanel);
 							Lecteur.player.stop();
                             lecteur.stop();
                             lecteur=null;                          
@@ -1207,8 +1209,8 @@ public class GUI extends JXFrame{
 						if(tab[i]<Lecteur.CURRENTINDEXMEDIA)
 							k++;
 					Lecteur.CURRENTINDEXMEDIA-=k;
-					GUI.thisClass.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-					GUI.thisClass.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
+					GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
+					GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
 	        		}catch(Exception ex){}
 	        		}	        	
 	        });
@@ -1230,8 +1232,8 @@ public class GUI extends JXFrame{
 							if(tab[i]<Lecteur.CURRENTINDEXMEDIA)
 								k++;
 						Lecteur.CURRENTINDEXMEDIA-=k;
-						GUI.thisClass.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-						GUI.thisClass.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
+						GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
+						GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
 		        		}catch(Exception ex){}
 		        		}	        	
 		        });
@@ -1255,8 +1257,8 @@ public class GUI extends JXFrame{
 	        		}
 	        		jTable=null;
 					jScrollPane.setViewportView(getJTable());
-					GUI.thisClass.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-					GUI.thisClass.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
+					GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
+					GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
 	        		}catch(Exception ex){}
 	        		}	        	
 	        });
@@ -1276,8 +1278,8 @@ public class GUI extends JXFrame{
 		        		}
 		        		jTable=null;
 						jScrollPane.setViewportView(getJTable());
-						GUI.thisClass.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-						GUI.thisClass.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
+						GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
+						GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
 		        	}catch(Exception ex){}
 		        		}	        	
 		        });
@@ -1576,11 +1578,11 @@ public class GUI extends JXFrame{
 	   {
 	     if ( mediaVisuel != null ){
 	    videoPanel.remove( mediaVisuel );
-	    thisClass.remove(videoPanel);
+	    instance.remove(videoPanel);
 	    }
 	    if(fullScrean!=null)
 	    	{fullScrean.remove(mediaVisuel);
-	    	thisClass.remove(videoPanel);
+	    	instance.remove(videoPanel);
 	    	}
 	   }
 
@@ -1643,55 +1645,20 @@ String themepack = args;
 		}
 		
 	}
-	@SuppressWarnings("deprecation")
-	public static void main(String[] args) throws Exception{	
-		
-		 try{
-			 System.gc();
-			   SunoneLogic.getInstance().init();
-			   FileEdited.restoreSunoneParameters(configuration); 
-			   }
-		 catch(Exception ex){}
-		lookAndFeel(lf);
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				try{
-				     thisClass = new GUI();
-				    thisClass.addWindowListener(new WindowListener(){
-				    	  public void windowClosing(WindowEvent e){
-				   		   try{
-				   		   FileEdited.saveSunoneParameters(configuration);
-				   		   System.gc();
-				   		   }catch(Exception ex){}
-				   		   System.exit(0);
-				   	   }
-				   	   public void windowClosed(WindowEvent e){}
-				   	   public void windowDeactivated(WindowEvent e){}
-				   	   public void windowIconified(WindowEvent e){}
-				   	   public void windowOpened(WindowEvent e){
-				   		   boolean b=Lecteur.REPEATPLAYLIST==Lecteur.ACTIVE?true:false;
-				   		   thisClass.repeatPlaylist.setState(b);
-				   		    b=Lecteur.REPEATMEDIA==Lecteur.ACTIVE?true:false;
-				   		   thisClass.repeatTrack.setState(b);
-				   		   
-				   	   }
-				   	   public void windowDeiconified(WindowEvent e){}
-				          public void windowActivated(WindowEvent e){}	   
-
-				    	
-				    });
-				     thisClass.setVisible(true);
-				     
-				}
-				catch(Exception e){}
-			}
-		});
-		
+    
+	
+	
+	public static GUI getInstance(){
+		if(instance==null)
+			instance=new GUI();
+		return instance;
 	}
-
-	public GUI() throws Exception{
+	
+	private GUI(){
 		super();
+		try{
 		initialize();
+		}catch(Exception e){}
 	}
 	@SuppressWarnings("deprecation")
 	private void initialize2()throws Exception{
@@ -1701,7 +1668,7 @@ String themepack = args;
 		if(f!=null)
 		for(int i=0;i<f.length;i++)
 		{  
-			if(f[i].toURL().getPath().toString().equals(Lecteur.CURRENTPLAYLIST.NAME)==false)
+			if(f[i]!=null && !f[i].isDirectory() && f[i].toURL().getPath().toString().equals(Lecteur.CURRENTPLAYLIST.NAME)==false)
 			{
 				createOpenItem(f[i].toString()); 
 			    createdeleteItem(f[i].toString());

@@ -174,8 +174,8 @@ public class Playlist {
 			File f=new File(sa); 
 			copy(new File(Lecteur.CURRENTPLAYLIST.NAME),f);
 			currentNAME=f.toString();
-			GUI.thisClass.createOpenItem(sa);
-			GUI.thisClass.createdeleteItem(sa);
+			GUI.getInstance().createOpenItem(sa);
+			GUI.getInstance().createdeleteItem(sa);
 			}
 	}
 	public static void orderByName(){}
