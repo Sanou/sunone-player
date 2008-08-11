@@ -2,7 +2,9 @@
 
 = Introduction =
 
-SunOne Player is a music manager with the ability to play sound samples and video and can utilize the computers system beep to create music. The SunOne player team is trying to make Sunone one of the best media player in the world base on java. 
+SunOne Player is a music manager with the ability to play sound samples and video and can utilize the computers system beep to create music. Our team is trying to make Sunone one of the best media player in the world base on java. 
+
+<a href="http://sanou-knowledge.blogspot.com/2008/08/sunone-player.html">see here</a> for more details.
 
 = Details =
 
