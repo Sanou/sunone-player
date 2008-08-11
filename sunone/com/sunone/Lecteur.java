@@ -27,56 +27,68 @@ public class Lecteur extends Thread {
 	    public   static Playlist CURRENTPLAYLIST;//contient à chaque fois le nom de la playlist en cours(doit être actualisé regulièrement par play) 
 	    public  static String CURRENTMEDIA;//contient à chaque fois l'url du fichier en cours(doit être actualisé regulièrement par play) 
         public static int CURRENTINDEXMEDIA;
-        public  static int CURRENTMETHODE=0;
+        //public  static int CURRENTMETHODE=0;
         
-        public static int PLAY=0;
-        public static int PAUSE=1;
-        public static int STOP=2;
-        public static int PREVIOUS=3;
-        public static int NEXT=4;
+        //public static int PLAY=0;
+        //public static int PAUSE=1;
+        //public static int STOP=2;
+        //public static int PREVIOUS=3;
+        //public static int NEXT=4;
         public static int fullScrean=0;
+        private static Lecteur instance;
         
+        private Lecteur(){}
+        
+        public static Lecteur getInstance(){
+        	if(instance==null)
+        		instance=new Lecteur();
+        	return instance;
+        }
         public enum SunoneStates{
     		IN_PAUSE,
     		IN_PLAY,
     		IN_PREVIOUS,
-    		IN_START,
-    		IN_STOP,
-    		IN_NEXT
+    		IN_NEXT,
+    		IN_STOP
     	}
         
+        SunoneStates state=SunoneStates.IN_STOP; 
        //Aucune des methodes de cette classe n'est directement invoquée
         // toutes les méthodes sont appélés via la méthode run() qui est invoquée à l'instanciation
          // de la thread Lecteur et auparavant, nous positionnons juste l'attribut CURRENTMETHODE 
         //qui décide la quelle des méthodes appéler.
         public void run(){
         	try{
-	switch(CURRENTMETHODE){
-	
-	case 0://lorsque CURRENTMETHODE est à 0, on instancie un thread qui va lire un media
-		  //donc qui appelle la methode play() 
-		if(CURRENTINDEXMEDIA==-1){
-		           CURRENTINDEXMEDIA++;
-		           play(CURRENTPLAYLIST,CURRENTINDEXMEDIA);
-		           }
-	        else 
-	        	play(CURRENTPLAYLIST,CURRENTINDEXMEDIA); 
-	        break;
-
-	case 1: //lorsque CURRENTMETHODE est à 1, on instancie un thread qui va mettre à pause le media.
-    	    pause(); 
-	        break;
-	case 2://lorsque CURRENTMETHODE est à 2, on instancie un thread qui va mettre à stop le media. 
-		    stop2(); 
-	        break;
-	case 3://lorsque CURRENTMETHODE est à 3, on instancie un thread qui va appeler la méthode previous.
-		   previous(); 
-	       break;
-	case 4://lorsque CURRENTMETHODE est à 4, on instancie un thread qui va appeler la méthode previous.
-		   next(); 
-	       break;
-	default: System.out.println("Verifiez le code");
-        	}//fin du switch
+        		
+      		if(getsState()==SunoneStates.IN_PLAY){
+      		if(CURRENTINDEXMEDIA==-1){
+      		           CURRENTINDEXMEDIA++;
+      		           play(CURRENTPLAYLIST,CURRENTINDEXMEDIA);
+      		           }
+      	        else 
+      	        	play(CURRENTPLAYLIST,CURRENTINDEXMEDIA); 
+      	      return; 
+      		}
+      		
+      		if(getsState()==SunoneStates.IN_PAUSE){
+      			pause(); 
+      			return;
+      		}
+      	
+      		if(getsState()==SunoneStates.IN_PREVIOUS){
+      			previous(); 
+      			return;
+      		}
+      		
+      		if(getsState()==SunoneStates.IN_NEXT){
+      			next(); 
+      			return;
+      		}
+      		
+      		if(getsState()==SunoneStates.IN_STOP){
+      			stop2(); 
+      			return;
+      		}
 	     }catch(Exception ex){}
         }
 	    
@@ -93,6 +105,7 @@ public class Lecteur extends Thread {
 		public static void play(Playlist playlist,int indexofmedia)throws Exception{
         	// la valeur x est utilisée pour le positionnement du JScroolPane de la JTable 
         	// la valeur qu'elle cotient à été choisit par des experiences que nous avons réalisés
+        	instance.setsStates(SunoneStates.IN_PLAY);
         	int x=(4*414)/23;
         	// recupération du chemin d'une musique dans la playlist
         	//la méthode open file est définie dans la classe FileEdited permet juste de lire et renvoyer le chemin d'un fichier
@@ -265,6 +278,7 @@ public class Lecteur extends Thread {
         }       
 
         public static void stop2(){
+        	instance.setsStates(SunoneStates.IN_STOP);
         	PLAYSTATUS=NEXTWASSTOP;
         	player.stop();
         	 GUI.getInstance().reinitialiseComposantsLecteur();
@@ -339,5 +353,20 @@ public class Lecteur extends Thread {
 		    	 a="..."+a.substring(a.length()-21,a.length());
 		    return (new String(new StringBuffer(a).reverse()));
         }
+
+		public SunoneStates getsState() {
+			return state;
+		}
+
+		public void setsStates(SunoneStates state) {
+			this.state = state;
+		}
        
+		public void pauseActionHandled(){
+			
+		}
+		public void playActionHandled(){}
+		public void stopActionHandled(){}
+		public void nextActionHandled(){}
+		public void previousActionHandled(){}
 }
