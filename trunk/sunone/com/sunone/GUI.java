@@ -40,6 +40,7 @@ import org.jdesktop.swingx.decorator.*;
 import com.l2fprod.gui.plaf.skin.Skin;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 import com.l2fprod.util.OS;
+import com.sunone.Lecteur.SunoneStates;
 
 
 import java.awt.Toolkit;
@@ -69,7 +70,7 @@ public class GUI extends JXFrame{
 	private static final long serialVersionUID = 1L;
 	private static GUI instance=null;
 	static Boolean b;
-	static Lecteur lecteur=null;
+	//static Lecteur lecteur=null;
 	public JPanel jContentPane = null;
 	private JMenuBar jJMenuBar = null;
 	private JMenu jMenu = null;
@@ -408,12 +409,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e) {
                   try{ 
 		    			
-						if(lecteur!=null){
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-                        lecteur.stop();
-                        lecteur=new Lecteur();
-    				    Lecteur.CURRENTMETHODE=Lecteur.PREVIOUS;
-    				    lecteur.start();
+						Lecteur.getInstance().stop();
+						Lecteur.getInstance().state=SunoneStates.IN_PREVIOUS;
+						Lecteur.getInstance().start();
     				    System.gc();
 					 }
 				    
@@ -432,13 +432,12 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					try{ 
-						if(lecteur!=null){
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-                        lecteur.stop();
+						Lecteur.getInstance().stop();
 					}
-				    lecteur=new Lecteur();
-				    Lecteur.CURRENTMETHODE=Lecteur.PLAY;
-				    lecteur.start();
+				    Lecteur.getInstance().state=SunoneStates.IN_PLAY;
+				    Lecteur.getInstance().start();
 				    System.gc();
 				    
 				}catch (Exception ex){}
@@ -458,20 +457,18 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					try{ 
-						if(lecteur!=null)
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP)
 							{ 
 							System.out.println("appel de pause");
 								    Lecteur.TIME=Lecteur.player.getMediaTime();
 								    System.out.println(Lecteur.TIME.getSeconds());		    
 								    Lecteur.player.stop();
-								    lecteur.stop();
-								    lecteur=null;
+								    Lecteur.getInstance().stop();
                                     Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
 							}
 							else{ 
-								lecteur=new Lecteur();
-							Lecteur.CURRENTMETHODE=Lecteur.PAUSE;
-							lecteur.start();
+								Lecteur.getInstance().state=SunoneStates.IN_PAUSE;
+								Lecteur.getInstance().start();
 							System.gc();
 					}
 								
@@ -495,12 +492,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e) {
                    try{ 
 		    			
-						if(lecteur!=null){
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
 						instance.videoPanel.setVisible(false);
 					    instance.reinitialiseComposantsLecteur();
-                        lecteur.stop();
-                        lecteur=null;
+					    Lecteur.getInstance().stop();
                         System.gc();
 					}
 				    
@@ -521,12 +517,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e) {
                  try{ 
 		    			
-						if(lecteur!=null){
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-                        lecteur.stop();
-                        lecteur=new Lecteur();
-    				    Lecteur.CURRENTMETHODE=Lecteur.NEXT;
-    				    lecteur.start();
+						Lecteur.getInstance().stop();
+						Lecteur.getInstance().state=SunoneStates.IN_NEXT;
+						Lecteur.getInstance().start();
     				    System.gc();
 					}
 				    
@@ -770,12 +765,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e){
 		    		try{ 
 		    			
-						if(lecteur!=null){
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-                        lecteur.stop();
-                        lecteur=new Lecteur();
-    				    Lecteur.CURRENTMETHODE=Lecteur.PREVIOUS;
-    				    lecteur.start();
+						Lecteur.getInstance().stop();
+						Lecteur.getInstance().state=SunoneStates.IN_PREVIOUS;
+						Lecteur.getInstance().start();
     				    System.gc();
 					 }
 				    
@@ -801,13 +795,12 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
 					try{ 
-							if(lecteur!=null){
+							if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 							Lecteur.player.stop();
-                            lecteur.stop();
+							Lecteur.getInstance().stop();
 						}
-					    lecteur=new Lecteur();
-					    Lecteur.CURRENTMETHODE=Lecteur.PLAY;
-					    lecteur.start();
+							Lecteur.getInstance().state=SunoneStates.IN_PLAY;
+							Lecteur.getInstance().start();
 					    System.gc();
 					}catch (Exception ex){}
 					}
@@ -826,19 +819,17 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
 					try{ 
-							if(lecteur!=null)
+							if(Lecteur.getInstance().state!=SunoneStates.IN_STOP)
 								{ 
 									    Lecteur.TIME=Lecteur.player.getMediaTime();		    
 									    Lecteur.player.stop();
-									    lecteur.stop();
-									    lecteur=null;
+									    Lecteur.getInstance().stop();
 									    System.gc();
                                         Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
 								}
 								else{ 
-									lecteur=new Lecteur();
-								Lecteur.CURRENTMETHODE=Lecteur.PAUSE;
-								lecteur.start();
+									Lecteur.getInstance().state=SunoneStates.IN_PAUSE;
+									Lecteur.getInstance().start();
 								System.gc();
 						}
 									
@@ -863,10 +854,10 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e){
 		    		try{ 
 		    			
-						if(lecteur!=null){
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-						lecteur.stop();
-                        lecteur=null;
+						Lecteur.getInstance().stop();
+                        
                         System.gc();
 						instance.videoPanel.setVisible(false);
 						instance.reinitialiseComposantsLecteur();
@@ -893,12 +884,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e){
 		    		try{ 
 		    			
-						if(lecteur!=null){
+						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-                        lecteur.stop();
-                        lecteur=new Lecteur();
-    				    Lecteur.CURRENTMETHODE=Lecteur.NEXT;
-    				    lecteur.start();
+						Lecteur.getInstance().stop();
+						Lecteur.getInstance().state=SunoneStates.IN_NEXT;
+						Lecteur.getInstance().start();
     				    System.gc();
 					}
 				    
@@ -1037,17 +1027,16 @@ public class GUI extends JXFrame{
 		    		if(e.getClickCount()==2){
 		    			GUI.instance.jTable.setValueAt(" ",Lecteur.CURRENTINDEXMEDIA, 0);
 		    			Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow();
-		    			Lecteur.CURRENTMETHODE=Lecteur.PLAY;
+		    			Lecteur.getInstance().state=SunoneStates.IN_PLAY;
 		    			try{ 
-							if(lecteur instanceof Lecteur){
+							if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
 							instance.remove(videoPanel);
 							Lecteur.player.stop();
-                            lecteur.stop();
-                            lecteur=null;                          
+							Lecteur.getInstance().stop();
+                                                  
 						}
 						
-					    lecteur=new Lecteur();
-					    lecteur.start();
+							Lecteur.getInstance().start();
 					    System.gc();
 					}catch (Exception ex){}		    			
 		    		}
@@ -1661,7 +1650,7 @@ String themepack = args;
 		}catch(Exception e){}
 	}
 	@SuppressWarnings("deprecation")
-	private void initialize2()throws Exception{
+	private void scanPlaylist()throws Exception{
 		String s=Lecteur.CURRENTPLAYLIST.NAME.substring(0,Lecteur.CURRENTPLAYLIST.NAME.length()-20);
 		File[] f=new File(s).listFiles();
 		int k=0;
@@ -1703,7 +1692,7 @@ String themepack = args;
 		this.setJMenuBar(getJJMenuBar());
 		logger.info("--Setting title \"SunOne  Player\"...");
 		this.setTitle("SunOne  Player");
-		initialize2();
+		scanPlaylist();
 	}
 	//grand panel de SunOne Player
 	private Container getJContentPane() throws Exception{

@@ -41,5 +41,13 @@ public class SunoneLogic {
 		}
 		    
 	}
+	
+	public void pauseActionHandled(){
+		
+	}
+	public void playActionHandled(){}
+	public void stopActionHandled(){}
+	public void nextActionHandled(){}
+	public void previousActionHandled(){}
 		
 }
