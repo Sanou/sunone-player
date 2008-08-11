@@ -137,43 +137,43 @@ public class Lecteur extends Thread {
               			  if(PLAYSTATUS!=NEXTWASPAUSE){
               				  //quelques initialisations des labels centraux de l'interface graphique
               				  // aussi bien celui du nom de l'artiste que celui de la durée totale de la musique
-                      		  GUI.thisClass.jLabel6.setText("00:00/00:00");
-                      		  GUI.thisClass.jLabel.setText(getArtistName(CURRENTMEDIA));
-                    		  GUI.thisClass.jSlider1.setValue(0);
+                      		  GUI.getInstance().jLabel6.setText("00:00/00:00");
+                      		  GUI.getInstance().jLabel.setText(getArtistName(CURRENTMEDIA));
+                      		  GUI.getInstance().jSlider1.setValue(0);
               		  }
               		  }
               		  
               		  catch(Exception e){}
-             		  GUI.thisClass.jSlider1.setMaximum((int)dureeTotale);  
+              		  GUI.getInstance().jSlider1.setMaximum((int)dureeTotale);  
               		  player.prefetch();
               		
              		                 	 }
                  	  
               	  public void prefetchComplete(PrefetchCompleteEvent pe){
-              		GUI.thisClass.reinitialiseComposantsLecteur();
-              		GUI.thisClass.mediaVisuel = player.getVisualComponent();
-              		if(GUI.thisClass.mediaVisuel!=null)
-              		GUI.thisClass.mediaVisuel.addMouseListener(new MouseListener(){
+              		GUI.getInstance().reinitialiseComposantsLecteur();
+              		GUI.getInstance().mediaVisuel = player.getVisualComponent();
+              		if(GUI.getInstance().mediaVisuel!=null)
+              			GUI.getInstance().mediaVisuel.addMouseListener(new MouseListener(){
                           
 						public void mouseClicked(MouseEvent e) {
 							if(e.getClickCount()==2){
 								if(fullScrean==0){
 									fullScrean=1;
-								GUI.thisClass.fullScrean=GUI.thisClass.getFullScrean();
+									GUI.getInstance().fullScrean=GUI.getInstance().getFullScrean();
 								Toolkit kit =  Toolkit.getDefaultToolkit(); 
 							    Dimension screen = kit.getScreenSize(); 
-								GUI.thisClass.fullScrean.setSize(screen);
-								GUI.thisClass.fullScrean.add(GUI.thisClass.mediaVisuel);
-								GUI.thisClass.setVisible(false);
-								GUI.thisClass.fullScrean.setAlwaysOnTop(true);
-								GUI.thisClass.fullScrean.setVisible(true);
+							    GUI.getInstance().fullScrean.setSize(screen);
+							    GUI.getInstance().fullScrean.add(GUI.getInstance().mediaVisuel);
+								GUI.getInstance().setVisible(false);
+								GUI.getInstance().fullScrean.setAlwaysOnTop(true);
+								GUI.getInstance().fullScrean.setVisible(true);
 								
 								}
 								else{fullScrean=0;
-									 GUI.thisClass.videoPanel.add( GUI.thisClass.mediaVisuel, BorderLayout.CENTER );
-									 GUI.thisClass.fullScrean.setVisible(false);
-									 GUI.thisClass.setVisible(true);
-									 GUI.thisClass.fullScrean=null;
+									 GUI.getInstance().videoPanel.add( GUI.getInstance().mediaVisuel, BorderLayout.CENTER );
+									 GUI.getInstance().fullScrean.setVisible(false);
+									 GUI.getInstance().setVisible(true);
+									 GUI.getInstance().fullScrean=null;
 									  
 									
 								}
@@ -189,16 +189,16 @@ public class Lecteur extends Thread {
 						public void mouseReleased(MouseEvent e) {}
               			
               		});
-              		player.getGainControl().setDB(-70+GUI.thisClass.jSlider.getValue());
-              		 if ( GUI.thisClass.mediaVisuel != null ){
-              			GUI.thisClass.jContentPane.add(GUI.thisClass.getJPanel4(), BorderLayout.CENTER);
-              	        GUI.thisClass.videoPanel.add( GUI.thisClass.mediaVisuel, BorderLayout.CENTER );
-              	        GUI.thisClass.videoPanel.setVisible(true);
-              	        GUI.thisClass.videoPanel.setTitle("SunOne");
-              	        GUI.thisClass.videoPanel.pack();
-              	      if(GUI.thisClass.fullScrean!=null){
-  						GUI.thisClass.fullScrean.add(GUI.thisClass.mediaVisuel);
-  						GUI.thisClass.fullScrean.setVisible(true);
+              		player.getGainControl().setDB(-70+GUI.getInstance().jSlider.getValue());
+              		 if ( GUI.getInstance().mediaVisuel != null ){
+              			GUI.getInstance().jContentPane.add(GUI.getInstance().getJPanel4(), BorderLayout.CENTER);
+              	        GUI.getInstance().videoPanel.add( GUI.getInstance().mediaVisuel, BorderLayout.CENTER );
+              	        GUI.getInstance().videoPanel.setVisible(true);
+              	        GUI.getInstance().videoPanel.setTitle("SunOne");
+              	        GUI.getInstance().videoPanel.pack();
+              	      if(GUI.getInstance().fullScrean!=null){
+  						GUI.getInstance().fullScrean.add(GUI.getInstance().mediaVisuel);
+  						GUI.getInstance().fullScrean.setVisible(true);
                 		}
               	     
               		 }  
@@ -210,11 +210,11 @@ public class Lecteur extends Thread {
                     	Thread.sleep(70);
                     	}
                     String timeTotal=conversion((int)player.getDuration().getSeconds());
-                    GUI.thisClass.jTable.setValueAt(timeTotal, CURRENTINDEXMEDIA, 2);
-                    GUI.thisClass.jTable.setValueAt(GUI.fleche,CURRENTINDEXMEDIA, 0);
+                    GUI.getInstance().jTable.setValueAt(timeTotal, CURRENTINDEXMEDIA, 2);
+                    GUI.getInstance().jTable.setValueAt(GUI.fleche,CURRENTINDEXMEDIA, 0);
                     if(CURRENTINDEXMEDIA!=0)
-                    GUI.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA-1, 0);
-                    GUI.thisClass.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(CURRENTINDEXMEDIA/4));
+                    GUI.getInstance().jTable.setValueAt(" ",CURRENTINDEXMEDIA-1, 0);
+                    GUI.getInstance().jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(CURRENTINDEXMEDIA/4));
                     x+=x;
                     scrollIncrement=0;
                     if(PLAYSTATUS==NEXTWASPAUSE)
@@ -226,8 +226,8 @@ public class Lecteur extends Thread {
                     {
                     	Thread.sleep(1000);
                     	int i=(int)player.getMediaTime().getSeconds();
-                    	GUI.thisClass.jSlider1.setValue(i);                   	
-                    	GUI.thisClass.jLabel6.setText(conversion(i)+"/"+timeTotal);
+                    	GUI.getInstance().jSlider1.setValue(i);                   	
+                    	GUI.getInstance().jLabel6.setText(conversion(i)+"/"+timeTotal);
                     }              
                    
         		  }
@@ -267,7 +267,7 @@ public class Lecteur extends Thread {
         public static void stop2(){
         	PLAYSTATUS=NEXTWASSTOP;
         	player.stop();
-        	 GUI.thisClass.reinitialiseComposantsLecteur();
+        	 GUI.getInstance().reinitialiseComposantsLecteur();
         	
         }
         public static void pause(){
@@ -279,9 +279,9 @@ public class Lecteur extends Thread {
         public static void previous()throws Exception{
         	if(REPEATMEDIA==ACTIVE)
         	{ REPEATMEDIA=UNACTIVE;
-        	GUI.thisClass.repeatTrack.setState(false);
+        	GUI.getInstance().repeatTrack.setState(false);
         	}
-        	GUI.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
+        	GUI.getInstance().jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
         	if(CURRENTINDEXMEDIA==0){
         	 if(REPEATPLAYLIST==ACTIVE){
         		 CURRENTINDEXMEDIA=CURRENTPLAYLIST.getNumberOfMedia()-1;
@@ -298,9 +298,9 @@ public class Lecteur extends Thread {
         public static void next()throws Exception{
         	if(REPEATMEDIA==ACTIVE)
         	{ REPEATMEDIA=UNACTIVE;
-              GUI.thisClass.repeatTrack.setState(false);        	
+              GUI.getInstance().repeatTrack.setState(false);        	
         	}
-        	GUI.thisClass.jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
+        	GUI.getInstance().jTable.setValueAt(" ",CURRENTINDEXMEDIA, 0);
         	if(CURRENTINDEXMEDIA==CURRENTPLAYLIST.getNumberOfMedia()-1){
         	 if(REPEATPLAYLIST==ACTIVE)
         	 {
