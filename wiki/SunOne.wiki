@@ -6,4 +6,5 @@ SunOne Player is a music manager with the ability to play sound samples and vide
 
 = Details =
 see here http://sanou-knowledge.blogspot.com/2008/08/sunone-player.html for more details.
+ 
 http://2.bp.blogspot.com/_UjU3Hhnj0H4/SJmMGegxkNI/AAAAAAAAAEI/o5hnUNtZsDg/s1600-h/screenshot.jpg
