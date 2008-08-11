@@ -387,7 +387,8 @@ public class GUI extends JXFrame{
 					try{
 				   		  // String st=(new File("com\\sunone\\CloseFile.so")).toURL().getPath().toString();
 				   		   FileEdited.saveSunoneParameters(configuration);
-				   		   }catch(Exception ex){}
+				   		   System.gc();
+					}catch(Exception ex){}
 				   		   System.exit(0);
 					
 				}
@@ -411,6 +412,7 @@ public class GUI extends JXFrame{
                         lecteur=new Lecteur();
     				    Lecteur.CURRENTMETHODE=Lecteur.PREVIOUS;
     				    lecteur.start();
+    				    System.gc();
 					 }
 				    
 				}catch (Exception ex){}
@@ -435,6 +437,7 @@ public class GUI extends JXFrame{
 				    lecteur=new Lecteur();
 				    Lecteur.CURRENTMETHODE=Lecteur.PLAY;
 				    lecteur.start();
+				    System.gc();
 				    
 				}catch (Exception ex){}
 				}
@@ -467,7 +470,7 @@ public class GUI extends JXFrame{
 								lecteur=new Lecteur();
 							Lecteur.CURRENTMETHODE=Lecteur.PAUSE;
 							lecteur.start();
-				           
+							System.gc();
 					}
 								
 						
@@ -496,6 +499,7 @@ public class GUI extends JXFrame{
 					    thisClass.reinitialiseComposantsLecteur();
                         lecteur.stop();
                         lecteur=null;
+                        System.gc();
 					}
 				    
 				}catch (Exception ex){}
@@ -521,6 +525,7 @@ public class GUI extends JXFrame{
                         lecteur=new Lecteur();
     				    Lecteur.CURRENTMETHODE=Lecteur.NEXT;
     				    lecteur.start();
+    				    System.gc();
 					}
 				    
 				}catch (Exception ex){}
@@ -769,6 +774,7 @@ public class GUI extends JXFrame{
                         lecteur=new Lecteur();
     				    Lecteur.CURRENTMETHODE=Lecteur.PREVIOUS;
     				    lecteur.start();
+    				    System.gc();
 					 }
 				    
 				}catch (Exception ex){}
@@ -800,7 +806,7 @@ public class GUI extends JXFrame{
 					    lecteur=new Lecteur();
 					    Lecteur.CURRENTMETHODE=Lecteur.PLAY;
 					    lecteur.start();
-					    
+					    System.gc();
 					}catch (Exception ex){}
 					}
 			});
@@ -824,13 +830,14 @@ public class GUI extends JXFrame{
 									    Lecteur.player.stop();
 									    lecteur.stop();
 									    lecteur=null;
+									    System.gc();
                                         Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
 								}
 								else{ 
 									lecteur=new Lecteur();
 								Lecteur.CURRENTMETHODE=Lecteur.PAUSE;
 								lecteur.start();
-					           
+								System.gc();
 						}
 									
 							
@@ -858,6 +865,7 @@ public class GUI extends JXFrame{
 						Lecteur.player.stop();
 						lecteur.stop();
                         lecteur=null;
+                        System.gc();
 						thisClass.videoPanel.setVisible(false);
 						thisClass.reinitialiseComposantsLecteur();
                         
@@ -889,6 +897,7 @@ public class GUI extends JXFrame{
                         lecteur=new Lecteur();
     				    Lecteur.CURRENTMETHODE=Lecteur.NEXT;
     				    lecteur.start();
+    				    System.gc();
 					}
 				    
 				}catch (Exception ex){}
@@ -1037,7 +1046,7 @@ public class GUI extends JXFrame{
 						
 					    lecteur=new Lecteur();
 					    lecteur.start();
-					    
+					    System.gc();
 					}catch (Exception ex){}		    			
 		    		}
 		    	}
@@ -1638,6 +1647,7 @@ String themepack = args;
 	public static void main(String[] args) throws Exception{	
 		
 		 try{
+			 System.gc();
 			   SunoneLogic.getInstance().init();
 			   FileEdited.restoreSunoneParameters(configuration); 
 			   }
@@ -1651,6 +1661,7 @@ String themepack = args;
 				    	  public void windowClosing(WindowEvent e){
 				   		   try{
 				   		   FileEdited.saveSunoneParameters(configuration);
+				   		   System.gc();
 				   		   }catch(Exception ex){}
 				   		   System.exit(0);
 				   	   }
