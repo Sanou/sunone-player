@@ -464,6 +464,7 @@ public class GUI extends JXFrame{
 								    System.out.println(Lecteur.TIME.getSeconds());		    
 								    Lecteur.player.stop();
 								    Lecteur.getInstance(Lecteur.STATEFULL).stop();
+								    Lecteur.state=SunoneStates.IN_STOP;
                                     Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
 							}
 							else{ 

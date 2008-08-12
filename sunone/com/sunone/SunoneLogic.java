@@ -13,11 +13,13 @@ public class SunoneLogic {
 	private PropertiesConfiguration configuration;
 	private String SUNONE_CONFIGURATION_FILE="sunone.properties";
 	private String SUNONE_STATES_PREFIX="com.sunone.states";
-	Logger logger =Logger.getLogger(SunoneLogic.class);
+	static Logger logger =Logger.getLogger(SunoneLogic.class);
 	
 	private SunoneLogic(){}
 
 	public static SunoneLogic getInstance(){
+		if(logger.isDebugEnabled())
+			logger.debug("GetInstance");
 		if(instance==null){
 		instance= new SunoneLogic();
 		}
@@ -25,7 +27,8 @@ public class SunoneLogic {
 		}
 	
 	public void init(){
-	
+		if(logger.isDebugEnabled())
+			logger.debug("initializing");
 			try {
 				configuration = new PropertiesConfiguration(SUNONE_CONFIGURATION_FILE);
 				GUI.configuration =configuration;
