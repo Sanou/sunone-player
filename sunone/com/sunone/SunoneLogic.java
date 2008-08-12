@@ -5,6 +5,8 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 
+import com.sunone.Lecteur.SunoneStates;
+
 public class SunoneLogic {
 	
 	private static SunoneLogic instance=null;
@@ -42,12 +44,83 @@ public class SunoneLogic {
 		    
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void pauseActionHandled(){
-		
+		try{ 
+			if(Lecteur.state!=SunoneStates.IN_STOP)
+				{ 
+					    Lecteur.TIME=Lecteur.player.getMediaTime();		    
+					    Lecteur.player.stop();
+					    Lecteur.getInstance(Lecteur.STATEFULL).stop();
+					    Lecteur.state=SunoneStates.IN_STOP;
+					    System.gc();
+                        Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
+				}
+				else{ 
+					Lecteur.state=SunoneStates.IN_PAUSE;
+					Lecteur.getInstance(Lecteur.STATELESS).start();
+				System.gc();
+		}
+					
+			
+	}catch (Exception ex){}
 	}
-	public void playActionHandled(){}
-	public void stopActionHandled(){}
-	public void nextActionHandled(){}
-	public void previousActionHandled(){}
+	@SuppressWarnings("deprecation")
+	public void playActionHandled(){
+		try{ 
+			if(Lecteur.state!=SunoneStates.IN_STOP){
+			Lecteur.player.stop();
+			Lecteur.getInstance(Lecteur.STATEFULL).stop();
+		}
+			Lecteur.state=SunoneStates.IN_PLAY;
+			Lecteur.getInstance(Lecteur.STATELESS).start();
+	    System.gc();
+	}catch (Exception ex){}
+	}
+	@SuppressWarnings("deprecation")
+	public void stopActionHandled(){
+		try{ 
+			
+			if(Lecteur.state!=SunoneStates.IN_STOP){
+			Lecteur.player.stop();
+			Lecteur.getInstance(Lecteur.STATEFULL).stop();
+            
+            System.gc();
+			GUI.getInstance().videoPanel.setVisible(false);
+			GUI.getInstance().reinitialiseComposantsLecteur();
+            
+		}
+	    
+	}catch (Exception ex){}
+
+	}
+	@SuppressWarnings("deprecation")
+	public void nextActionHandled(){
+		try{ 
+			
+			if(Lecteur.state!=SunoneStates.IN_STOP){
+			Lecteur.player.stop();
+			Lecteur.getInstance(Lecteur.STATEFULL).stop();
+			Lecteur.state=SunoneStates.IN_NEXT;
+			Lecteur.getInstance(Lecteur.STATELESS).start();
+		    System.gc();
+		}
+	    
+	}catch (Exception ex){}
+	}
+	@SuppressWarnings("deprecation")
+	public void previousActionHandled(){
+		try{ 
+			
+			if(Lecteur.state!=SunoneStates.IN_STOP){
+			Lecteur.player.stop();
+			Lecteur.getInstance(Lecteur.STATEFULL).stop();
+			Lecteur.state=SunoneStates.IN_PREVIOUS;
+			Lecteur.getInstance(Lecteur.STATELESS).start();
+		    System.gc();
+		 }
+	    
+	}catch (Exception ex){}
+	}
 		
 }

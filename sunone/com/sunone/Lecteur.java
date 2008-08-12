@@ -27,6 +27,8 @@ public class Lecteur extends Thread {
 	    public   static Playlist CURRENTPLAYLIST;//contient à chaque fois le nom de la playlist en cours(doit être actualisé regulièrement par play) 
 	    public  static String CURRENTMEDIA;//contient à chaque fois l'url du fichier en cours(doit être actualisé regulièrement par play) 
         public static int CURRENTINDEXMEDIA;
+        public static final int STATEFULL=0;
+        public static final int STATELESS=1;
         //public  static int CURRENTMETHODE=0;
         
         //public static int PLAY=0;
@@ -39,9 +41,17 @@ public class Lecteur extends Thread {
         
         private Lecteur(){}
         
-        public static Lecteur getInstance(){
-        	if(instance==null)
+        public static Lecteur getInstance(int i){
+        	
+        	//state full
+        	if(i==STATEFULL){
+        		if(instance==null)
         		instance=new Lecteur();
+        	}
+        	//state less
+        	else{
+        		instance=new Lecteur();
+        	}
         	return instance;
         }
         public enum SunoneStates{
@@ -52,7 +62,7 @@ public class Lecteur extends Thread {
     		IN_STOP
     	}
         
-        SunoneStates state=SunoneStates.IN_STOP; 
+       public static SunoneStates state=SunoneStates.IN_STOP; 
        //Aucune des methodes de cette classe n'est directement invoquée
         // toutes les méthodes sont appélés via la méthode run() qui est invoquée à l'instanciation
          // de la thread Lecteur et auparavant, nous positionnons juste l'attribut CURRENTMETHODE 
@@ -359,7 +369,7 @@ public class Lecteur extends Thread {
 		}
 
 		public void setsStates(SunoneStates state) {
-			this.state = state;
+			Lecteur.state = state;
 		}
        
 		public void pauseActionHandled(){
