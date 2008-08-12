@@ -70,7 +70,7 @@ public class GUI extends JXFrame{
 	private static final long serialVersionUID = 1L;
 	private static GUI instance=null;
 	static Boolean b;
-	//static Lecteur lecteur=null;
+
 	public JPanel jContentPane = null;
 	private JMenuBar jJMenuBar = null;
 	private JMenu jMenu = null;
@@ -409,11 +409,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e) {
                   try{ 
 		    			
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
+						if(Lecteur.state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-						Lecteur.getInstance().stop();
-						Lecteur.getInstance().state=SunoneStates.IN_PREVIOUS;
-						Lecteur.getInstance().start();
+						Lecteur.getInstance(Lecteur.STATEFULL).stop();
+						Lecteur.state=SunoneStates.IN_PREVIOUS;
+						Lecteur.getInstance(Lecteur.STATELESS).start();
     				    System.gc();
 					 }
 				    
@@ -432,12 +432,12 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					try{ 
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
+						if(Lecteur.state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-						Lecteur.getInstance().stop();
+						Lecteur.getInstance(Lecteur.STATEFULL).stop();
 					}
-				    Lecteur.getInstance().state=SunoneStates.IN_PLAY;
-				    Lecteur.getInstance().start();
+				    Lecteur.state=SunoneStates.IN_PLAY;
+				    Lecteur.getInstance(Lecteur.STATELESS).start();
 				    System.gc();
 				    
 				}catch (Exception ex){}
@@ -457,18 +457,18 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					try{ 
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP)
+						if(Lecteur.state!=SunoneStates.IN_STOP)
 							{ 
-							System.out.println("appel de pause");
+							
 								    Lecteur.TIME=Lecteur.player.getMediaTime();
 								    System.out.println(Lecteur.TIME.getSeconds());		    
 								    Lecteur.player.stop();
-								    Lecteur.getInstance().stop();
+								    Lecteur.getInstance(Lecteur.STATEFULL).stop();
                                     Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
 							}
 							else{ 
-								Lecteur.getInstance().state=SunoneStates.IN_PAUSE;
-								Lecteur.getInstance().start();
+								Lecteur.state=SunoneStates.IN_PAUSE;
+								Lecteur.getInstance(Lecteur.STATELESS).start();
 							System.gc();
 					}
 								
@@ -492,11 +492,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e) {
                    try{ 
 		    			
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
+						if(Lecteur.state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
 						instance.videoPanel.setVisible(false);
 					    instance.reinitialiseComposantsLecteur();
-					    Lecteur.getInstance().stop();
+					    Lecteur.getInstance(Lecteur.STATEFULL).stop();
                         System.gc();
 					}
 				    
@@ -517,11 +517,11 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e) {
                  try{ 
 		    			
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
+						if(Lecteur.state!=SunoneStates.IN_STOP){
 						Lecteur.player.stop();
-						Lecteur.getInstance().stop();
-						Lecteur.getInstance().state=SunoneStates.IN_NEXT;
-						Lecteur.getInstance().start();
+						Lecteur.getInstance(Lecteur.STATEFULL).stop();
+						Lecteur.state=SunoneStates.IN_NEXT;
+						Lecteur.getInstance(Lecteur.STATELESS).start();
     				    System.gc();
 					}
 				    
@@ -763,17 +763,7 @@ public class GUI extends JXFrame{
 			jButton.addActionListener(new ActionListener(){
 		    	@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
-		    		try{ 
-		    			
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
-						Lecteur.player.stop();
-						Lecteur.getInstance().stop();
-						Lecteur.getInstance().state=SunoneStates.IN_PREVIOUS;
-						Lecteur.getInstance().start();
-    				    System.gc();
-					 }
-				    
-				}catch (Exception ex){}
+		    		SunoneLogic.getInstance().previousActionHandled();
 				}
 		    		
 		    	
@@ -794,15 +784,7 @@ public class GUI extends JXFrame{
 			jButton1.addActionListener(new ActionListener(){
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
-					try{ 
-							if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
-							Lecteur.player.stop();
-							Lecteur.getInstance().stop();
-						}
-							Lecteur.getInstance().state=SunoneStates.IN_PLAY;
-							Lecteur.getInstance().start();
-					    System.gc();
-					}catch (Exception ex){}
+					SunoneLogic.getInstance().playActionHandled();
 					}
 			});
 		}
@@ -818,30 +800,12 @@ public class GUI extends JXFrame{
 			jButton2.addActionListener(new ActionListener(){
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
-					try{ 
-							if(Lecteur.getInstance().state!=SunoneStates.IN_STOP)
-								{ 
-									    Lecteur.TIME=Lecteur.player.getMediaTime();		    
-									    Lecteur.player.stop();
-									    Lecteur.getInstance().stop();
-									    System.gc();
-                                        Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
-								}
-								else{ 
-									Lecteur.getInstance().state=SunoneStates.IN_PAUSE;
-									Lecteur.getInstance().start();
-								System.gc();
-						}
-									
-							
-					}catch (Exception ex){}
+					SunoneLogic.getInstance().pauseActionHandled();
 					}
 			});
 		}
 		return jButton2;
 	}
-
-
 	private JButton getStopButton() {
 		if(logger.isDebugEnabled())
 			logger.debug("Adding \"stop\" button...");
@@ -852,20 +816,8 @@ public class GUI extends JXFrame{
 			jButton3.addActionListener(new ActionListener(){
 		    	@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
-		    		try{ 
-		    			
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
-						Lecteur.player.stop();
-						Lecteur.getInstance().stop();
-                        
-                        System.gc();
-						instance.videoPanel.setVisible(false);
-						instance.reinitialiseComposantsLecteur();
-                        
-					}
-				    
-				}catch (Exception ex){}
-				}
+		    		SunoneLogic.getInstance().stopActionHandled();
+		    	}
 		    		
 		    	
 		    });
@@ -882,17 +834,7 @@ public class GUI extends JXFrame{
 		    jButton4.addActionListener(new ActionListener(){
 		    	@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
-		    		try{ 
-		    			
-						if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
-						Lecteur.player.stop();
-						Lecteur.getInstance().stop();
-						Lecteur.getInstance().state=SunoneStates.IN_NEXT;
-						Lecteur.getInstance().start();
-    				    System.gc();
-					}
-				    
-				}catch (Exception ex){}
+		    		SunoneLogic.getInstance().nextActionHandled();
 				}
 		    		
 		    	
@@ -900,8 +842,6 @@ public class GUI extends JXFrame{
 		}
 		return jButton4;
 	}
-
-
 	private JSlider getJSlider() {
 		logger.info("Adding Volume Slider.");
 		if (jSlider == null) {
@@ -930,7 +870,6 @@ public class GUI extends JXFrame{
 		}
 		return jSlider;
 	}
-
 	private JSlider getJSlider1() {
 		logger.info("Adding Media Progression indicator Slider.");
 		if (jSlider1 == null) {
@@ -964,7 +903,6 @@ public class GUI extends JXFrame{
 		}
 		return jSlider1;
 	}
-
 	private JScrollPane getJScrollPane()throws Exception {
 		if(logger.isDebugEnabled())
 			logger.debug("2) - Adding Panel 2 with playlist Table.");
@@ -1027,16 +965,16 @@ public class GUI extends JXFrame{
 		    		if(e.getClickCount()==2){
 		    			GUI.instance.jTable.setValueAt(" ",Lecteur.CURRENTINDEXMEDIA, 0);
 		    			Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow();
-		    			Lecteur.getInstance().state=SunoneStates.IN_PLAY;
+		    			Lecteur.state=SunoneStates.IN_PLAY;
 		    			try{ 
-							if(Lecteur.getInstance().state!=SunoneStates.IN_STOP){
+							if(Lecteur.state!=SunoneStates.IN_STOP){
 							instance.remove(videoPanel);
 							Lecteur.player.stop();
-							Lecteur.getInstance().stop();
+							Lecteur.getInstance(Lecteur.STATEFULL).stop();
                                                   
 						}
 						
-							Lecteur.getInstance().start();
+							Lecteur.getInstance(Lecteur.STATELESS).start();
 					    System.gc();
 					}catch (Exception ex){}		    			
 		    		}
