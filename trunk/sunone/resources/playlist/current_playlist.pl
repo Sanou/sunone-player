@@ -1,4 +1,3 @@
-D:\Divertissement et utilitaires\Musique\02 Piste 2.mp3
 D:\Divertissement et utilitaires\Musique\01 - Le Durcisseur.mp3
 D:\Divertissement et utilitaires\Musique\01 Attend.mp3
 D:\Divertissement et utilitaires\Musique\01 Piste 1.mp3
@@ -59,3 +58,14 @@ D:\Divertissement et utilitaires\Musique\Soulja Boy- Crank dat Souljaboy.mp3
 D:\Divertissement et utilitaires\Musique\Sè pa pou da.mp3
 D:\Divertissement et utilitaires\Musique\T.Pain - (12) Buy U A Drank (Shawty Snappin') (Feat. Yung Joc).mp3
 D:\Divertissement et utilitaires\Musique\Vitaa - A fleur de toi.mp3
+D:\Divertissement et utilitaires\Discours historique\[thesecret.tv].avi
+D:\Divertissement et utilitaires\Discours historique\fdrarsenalofdemocracy7.mp3
+D:\Divertissement et utilitaires\Discours historique\fdrwarmessage344.mp3
+D:\Divertissement et utilitaires\Discours historique\geraldfordpardonixon434348.mp3
+D:\Divertissement et utilitaires\Discours historique\jfkinaugural1sfdsfdsfdsfszz.mp3
+D:\Divertissement et utilitaires\Discours historique\mlking1.wav
+D:\Divertissement et utilitaires\Discours historique\mlkingihaveadreamtu6trtrtr766.mp3
+D:\Divertissement et utilitaires\Discours historique\roosevelt.mp3
+D:\Divertissement et utilitaires\Discours historique\trumann.wav
+D:\Divertissement et utilitaires\Discours historique\Bill Clinton\billclintonoklahomaprayerservice34583458439.mp3
+D:\Divertissement et utilitaires\Discours historique\The Seven Habits of highly effetive people\The Seven Habits Of Highly Effective People - Self Help Audio Book.mp3
