@@ -14,8 +14,8 @@ import javax.media.RealizeCompleteEvent;
 import javax.media.Player;
 public class Lecteur extends Thread {
 	    static int scrollIncrement=0;
-	    public static int ACTIVE=1;//permet d'activer repeat playlist ou media(un seul morceau)
-	    public static int UNACTIVE=0;//contraire de ACTIVE
+	    public static int ACTIVE=1;
+	    public static int UNACTIVE=0;
 	    public static Time TIME;
 	    public static int REPEATPLAYLIST=UNACTIVE;
 	    public static int REPEATMEDIA=UNACTIVE;
@@ -29,13 +29,7 @@ public class Lecteur extends Thread {
         public static int CURRENTINDEXMEDIA;
         public static final int STATEFULL=0;
         public static final int STATELESS=1;
-        //public  static int CURRENTMETHODE=0;
-        
-        //public static int PLAY=0;
-        //public static int PAUSE=1;
-        //public static int STOP=2;
-        //public static int PREVIOUS=3;
-        //public static int NEXT=4;
+       
         public static int fullScrean=0;
         private static Lecteur instance;
         
