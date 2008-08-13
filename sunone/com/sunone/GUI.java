@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import java.io.*;
-import javax.media.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.BorderLayout;
@@ -20,15 +19,16 @@ import java.awt.Dimension;
 import javax.swing.JMenuBar;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
+import java.awt.SystemColor;
+import java.awt.Insets;
+import java.awt.Font;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.MetalTheme;
+
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
@@ -40,23 +40,20 @@ import org.jdesktop.swingx.decorator.*;
 import com.l2fprod.gui.plaf.skin.Skin;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 import com.l2fprod.util.OS;
-import com.sunone.Lecteur.SunoneStates;
 
-
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-import java.awt.SystemColor;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JButton;
-import java.awt.Insets;
-import java.awt.Font;
-
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.JOptionPane;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JButton;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
+import javax.swing.ImageIcon;
 // Ce Projet est réalisé par  Diallo Mamadou Sanou et Fetue
 
 public class GUI extends JXFrame{
@@ -109,10 +106,10 @@ public class GUI extends JXFrame{
 	private JLabel jLabel7 = null;
 	public JScrollPane jScrollPane = null;
 	public  JXTable jTable = null;
-	private JMenu openPlaylist = null;
+	JMenu openPlaylist = null;
 	private JMenuItem jMenuItem9 = null;
 	private JMenuItem jMenuItem10 = null;
-	private JMenu removePlaylist = null;
+	JMenu removePlaylist = null;
 	private JMenuItem jMenuItem12 = null;
 	private JMenuItem jMenuItem13 = null;
 	private JMenuItem jMenuItem14 = null;
@@ -291,15 +288,7 @@ public class GUI extends JXFrame{
 			jMenuItem.setMnemonic(KeyEvent.VK_CONTROL);
 			jMenuItem.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					
-					try{
-						Playlist.newPlaylist();
-						jTable=null;
-						jScrollPane.setViewportView(getJTable());
-						Playlist.addToPlaylist(getFichier(JFileChooser.FILES_ONLY));
-					    jTable=null;
-					    jScrollPane.setViewportView(getJTable());
-					}catch(Exception ex){}
+					SunoneLogic.getInstance().openFileHandled();
 					}
 				
 			});
@@ -314,15 +303,7 @@ public class GUI extends JXFrame{
 			jMenuItem1.setText("Open Folder");
 			jMenuItem1.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					
-					try{
-						Playlist.newPlaylist();
-						jTable=null;
-						jScrollPane.setViewportView(getJTable());
-						Playlist.addToPlaylist(getFichier(JFileChooser.DIRECTORIES_ONLY));
-					    jTable=null;
-					    jScrollPane.setViewportView(getJTable());
-					}catch(Exception ex){}
+					SunoneLogic.getInstance().openFolderHandled();
 					}
 				
 			});
@@ -341,17 +322,7 @@ public class GUI extends JXFrame{
 			jMenuItem2.setText("Open URL");
 			jMenuItem2.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
-					
-					try{
-						Playlist.newPlaylist();
-						String s=messageDialog2("Enter the url");
-						File f[]={new File(s)};
-						jTable=null;
-						jScrollPane.setViewportView(getJTable());
-						Playlist.addToPlaylist(f);
-					    jTable=null;
-					    jScrollPane.setViewportView(getJTable());
-					}catch(Exception ex){}
+					SunoneLogic.getInstance().openUrlHandled();
 					}
 				
 			});
@@ -388,8 +359,7 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					try{
-				   		   FileEdited.saveSunoneParameters(configuration);
-				   		   System.gc();
+				   		   SunoneLogic.getInstance().saveSunoneParameters();
 					}catch(Exception ex){}
 				   		   System.exit(0);
 					
@@ -493,10 +463,7 @@ public class GUI extends JXFrame{
 	   repeatTrack=new JCheckBoxMenuItem("          Repeat Track");
 	   repeatTrack.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		 if(repeatTrack.getState()==true)
-	    			 Lecteur.REPEATMEDIA=Lecteur.ACTIVE;
-	    		 else
-	    			 Lecteur.REPEATMEDIA=Lecteur.UNACTIVE;
+	    		 SunoneLogic.getInstance().repeatMediaActivationHandled();
 	    	}
 	    	
 	    });
@@ -506,10 +473,7 @@ public class GUI extends JXFrame{
 	   repeatPlaylist=new JCheckBoxMenuItem("          Repeat Playlist");
 	   repeatPlaylist.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent e){
-	    		 if(repeatPlaylist.getState()==true)
-	    			 Lecteur.REPEATPLAYLIST=Lecteur.ACTIVE;
-	    		 else
-	    			 Lecteur.REPEATPLAYLIST=Lecteur.UNACTIVE;
+	    		SunoneLogic.getInstance().repeatPlaylistActivationHandled();
 	    	}
 	    	
 	    });
@@ -802,10 +766,7 @@ public class GUI extends JXFrame{
 					 new ChangeListener() {					
 					 public void stateChanged( ChangeEvent changeEvent )
 					 {
-						if(Lecteur.player.getState()==Player.Started) 
-						{
-							Lecteur.player.getGainControl().setDB(-70+jSlider.getValue());
-						}
+						SunoneLogic.getInstance().volumeControlActionHandled(jSlider.getValue());
 					 }
 					
 					 }
@@ -827,14 +788,11 @@ public class GUI extends JXFrame{
 			jSlider1.addMouseListener(new MouseListener(){
 				
 				public void mouseClicked(MouseEvent e){
-					Lecteur.TIME=(new javax.media.Time(jSlider1.getValue()));
-					Lecteur.player.setMediaTime((new javax.media.Time(jSlider1.getValue())));
+					
 				}
 				public void mousePressed(MouseEvent e){
-					//Lecteur.player.setMediaTime((new javax.media.Time(jSlider1.getValue())));
 				}
 				public void mouseReleased(MouseEvent e){
-					//Lecteur.player.setMediaTime((new javax.media.Time(jSlider1.getValue())));
 				}
 				public void mouseEntered(MouseEvent e){
 					
@@ -864,10 +822,10 @@ public class GUI extends JXFrame{
 		if(logger.isDebugEnabled())
 			logger.debug("Adding PlayList JTable...");
 		if (jTable == null) {
-			Playlist pl=new Playlist(Lecteur.CURRENTPLAYLIST.NAME);
+			
 			if(logger.isDebugEnabled())
 				logger.debug("Retrieving current playlist data from currentplaylist.pl...");
-			data =pl.loadingPlaylist();	
+				data =SunoneLogic.getInstance().loadPlaylist();	
 			  jTable = new JXTable(new AbstractTableModel() {
 				public static final long serialVersionUID=1L;
 				String[] columnNames = {" ","                      Artist - Title","   Time"};
@@ -906,23 +864,7 @@ public class GUI extends JXFrame{
 		    	@SuppressWarnings("deprecation")
 				public void mouseClicked(MouseEvent e){
 		    		if(e.getClickCount()==2){
-		    			GUI.instance.jTable.setValueAt(" ",Lecteur.CURRENTINDEXMEDIA, 0);
-		    			
-		    			try{ 
-							if(Lecteur.state!=SunoneStates.IN_STOP){
-								if(videoPanel!=null)
-							instance.remove(videoPanel);
-							Lecteur.player.stop();
-							Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow()-1;
-							}
-							else
-								Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow();
-							Lecteur.state=SunoneStates.IN_PLAY;
-							Lecteur.getInstance(Lecteur.STATEFULL).start();
-					    System.gc();
-		    			}
-					catch (Exception ex){
-					}		    			
+		    			SunoneLogic.getInstance().doubleClickHandled(jTable.getSelectedRow());
 		    		}
 		    	}
 		    	public void mousePressed(MouseEvent e){}
@@ -979,10 +921,7 @@ public class GUI extends JXFrame{
 			jMenuItem9.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					try{
-						Playlist.newPlaylist();
-					jTable=null;
-					jScrollPane.setViewportView(getJTable());
-					Lecteur.CURRENTINDEXMEDIA=-1;
+					SunoneLogic.getInstance().newPlaylistHanled();
 					}catch(Exception ex){}
 					}
 				
@@ -996,10 +935,7 @@ public class GUI extends JXFrame{
 				jMenuItem92.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						try{
-							Playlist.newPlaylist();
-						jTable=null;
-						jScrollPane.setViewportView(getJTable());
-						Lecteur.CURRENTINDEXMEDIA=-1;
+							SunoneLogic.getInstance().newPlaylistHanled();
 						}catch(Exception ex){}
 						}
 					
@@ -1018,10 +954,7 @@ public class GUI extends JXFrame{
 				public void actionPerformed(ActionEvent e){
 					
 					try{
-					Playlist.clearPlaylist(Lecteur.CURRENTPLAYLIST);
-					jTable=null;
-					jScrollPane.setViewportView(getJTable());			
-					Lecteur.CURRENTINDEXMEDIA=-1;
+					SunoneLogic.getInstance().clearPlaylistHandled();
 					}catch(Exception ex){}
 					}
 				
@@ -1036,10 +969,7 @@ public class GUI extends JXFrame{
 					public void actionPerformed(ActionEvent e){
 						
 						try{
-						Playlist.clearPlaylist(Lecteur.CURRENTPLAYLIST);
-						jTable=null;
-						jScrollPane.setViewportView(getJTable());			
-						Lecteur.CURRENTINDEXMEDIA=-1;
+						SunoneLogic.getInstance().clearPlaylistHandled();
 						}catch(Exception ex){}
 						}
 					
@@ -1072,19 +1002,7 @@ public class GUI extends JXFrame{
 			jMenuItem12.setText("Remove Track(s)");
 			jMenuItem12.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
-	        		try{
-	        		int [] tab=jTable.getSelectedRows();
-	        		Playlist.removeFromPlaylist(tab);
-	        		jTable=null;
-					jScrollPane.setViewportView(getJTable());
-					int k=0;
-					for(int i=0;i<tab.length;i++)
-						if(tab[i]<Lecteur.CURRENTINDEXMEDIA)
-							k++;
-					Lecteur.CURRENTINDEXMEDIA-=k;
-					GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-					GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
-	        		}catch(Exception ex){}
+	        		SunoneLogic.getInstance().removeTracks();
 	        		}	        	
 	        });
 		}
@@ -1095,19 +1013,7 @@ public class GUI extends JXFrame{
 				jMenuItem122.setText("       Remove Track(s) ");
 				jMenuItem122.addActionListener(new ActionListener(){
 		        	public void actionPerformed(ActionEvent e){
-		        		try{
-		        		int [] tab=jTable.getSelectedRows();
-		        		Playlist.removeFromPlaylist(tab);
-		        		jTable=null;
-						jScrollPane.setViewportView(getJTable());
-						int k=0;
-						for(int i=0;i<tab.length;i++)
-							if(tab[i]<Lecteur.CURRENTINDEXMEDIA)
-								k++;
-						Lecteur.CURRENTINDEXMEDIA-=k;
-						GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-						GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
-		        		}catch(Exception ex){}
+		        		SunoneLogic.getInstance().removeTracks();
 		        		}	        	
 		        });
 			}
@@ -1122,7 +1028,7 @@ public class GUI extends JXFrame{
 			jMenuItem13.setText("Add to Playlist");
 			jMenuItem13.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
-	        		SunoneLogic.getInstance().addToPlaylist();
+	        		SunoneLogic.getInstance().addToPlaylistHandled();
 	        		}	        	
 	        });
 		}
@@ -1133,7 +1039,7 @@ public class GUI extends JXFrame{
 				jMenuItem132.setText("       Add to Playlist");
 				jMenuItem132.addActionListener(new ActionListener(){
 		        	public void actionPerformed(ActionEvent e){
-		        		SunoneLogic.getInstance().addToPlaylist();
+		        		SunoneLogic.getInstance().addToPlaylistHandled();
 		        		}	        	
 		        });
 			}
@@ -1149,7 +1055,7 @@ public class GUI extends JXFrame{
 	        jMenuItem14.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
 	        		try{	
-	        		SunoneLogic.getInstance().savePlaylist();
+	        		SunoneLogic.getInstance().savePlaylistHandled();
 	        	}catch(Exception ex){}
 	        		}
 	        	
@@ -1163,7 +1069,7 @@ public class GUI extends JXFrame{
 		        jMenuItem142.addActionListener(new ActionListener(){
 		        	public void actionPerformed(ActionEvent e){
 		        		try{	
-		        		SunoneLogic.getInstance().savePlaylist();
+		        		SunoneLogic.getInstance().savePlaylistHandled();
 		        	}catch(Exception ex){}
 		        		}
 		        	
@@ -1266,10 +1172,7 @@ public class GUI extends JXFrame{
 		trop[tropindex2].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 					try{
-						Playlist.openPlaylist(new File(st));	      
-						jTable=null;
-						Lecteur.CURRENTINDEXMEDIA=-1;
-				        jScrollPane.setViewportView(getJTable());
+						SunoneLogic.getInstance().openPlaylist(st);	      
 			  }catch(Exception ex){}
 				}
 			
@@ -1277,10 +1180,7 @@ public class GUI extends JXFrame{
 		trop2[tropindex2].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 					try{
-						Playlist.openPlaylist(new File(st));	      
-						jTable=null;
-						Lecteur.CURRENTINDEXMEDIA=-1;
-				        jScrollPane.setViewportView(getJTable());
+						SunoneLogic.getInstance().openPlaylist(st);
 			  }catch(Exception ex){}
 				}
 			
@@ -1311,28 +1211,14 @@ public class GUI extends JXFrame{
 		 trop[tropindex].addActionListener(new ActionListener(){
 			 int s=tropindex;
 				public void actionPerformed(ActionEvent e){
-					
-					try{
-						Playlist.removePlaylist(st);
-						removePlaylist.remove(trop[s]);
-						openPlaylist.remove(trop[s+1]);
-						removePlaylist2.remove(trop2[s]);
-						openPlaylist2.remove(trop2[s+1]);
-					}catch(Exception ex){}
+					SunoneLogic.getInstance().removePlaylist(st, s);
 					}
 				
 			});
 		 trop2[tropindex].addActionListener(new ActionListener(){
 			 int s=tropindex;
 				public void actionPerformed(ActionEvent e){
-					
-					try{
-						Playlist.removePlaylist(st);
-						removePlaylist2.remove(trop2[s]);
-						openPlaylist2.remove(trop2[s+1]);
-						removePlaylist.remove(trop[s]);
-						openPlaylist.remove(trop[s+1]);
-					}catch(Exception ex){}
+					SunoneLogic.getInstance().removePlaylist(st, s);
 					}
 				
 			});
@@ -1515,13 +1401,13 @@ String themepack = args;
 	}
 	@SuppressWarnings("deprecation")
 	private void scanPlaylist()throws Exception{
-		String s=Lecteur.CURRENTPLAYLIST.NAME.substring(0,Lecteur.CURRENTPLAYLIST.NAME.length()-20);
+		String s=SunoneLogic.getInstance().getCurrentPlaylist().getName().substring(0,SunoneLogic.getInstance().getCurrentPlaylist().getName().length()-20);
 		File[] f=new File(s).listFiles();
 		int k=0;
 		if(f!=null)
 		for(int i=0;i<f.length;i++)
 		{  
-			if(f[i]!=null && !f[i].isDirectory() && f[i].toURL().getPath().toString().equals(Lecteur.CURRENTPLAYLIST.NAME)==false)
+			if(f[i]!=null && !f[i].isDirectory() && f[i].toURL().getPath().toString().equals(SunoneLogic.getInstance().getCurrentPlaylist().getName())==false)
 			{
 				createOpenItem(f[i].toString()); 
 			    createdeleteItem(f[i].toString());
@@ -1550,7 +1436,7 @@ String themepack = args;
 		this.setBackground(new Color(204, 255, 224));
 		logger.info("--Retrieving current playlist name.");
 		String st=new File(configuration.getString("com.sunone.playlist.currentplaylist")).toURL().getPath().toString();
-		Lecteur.CURRENTPLAYLIST=new Playlist(st);
+		SunoneLogic.getInstance().setCurrentPlaylist(st);
 		logger.info("--Lodding Principal panel...");
 		this.setContentPane(getJContentPane());
 		this.setJMenuBar(getJJMenuBar());
