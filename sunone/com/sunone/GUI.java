@@ -918,8 +918,6 @@ public class GUI extends JXFrame{
 							else
 								Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow();
 							Lecteur.state=SunoneStates.IN_PLAY;
-							System.out.print(Lecteur.state);
-							System.out.print(Lecteur.CURRENTINDEXMEDIA);
 							Lecteur.getInstance(Lecteur.STATEFULL).start();
 					    System.gc();
 		    			}
