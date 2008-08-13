@@ -388,7 +388,6 @@ public class GUI extends JXFrame{
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					try{
-				   		  // String st=(new File("com\\sunone\\CloseFile.so")).toURL().getPath().toString();
 				   		   FileEdited.saveSunoneParameters(configuration);
 				   		   System.gc();
 					}catch(Exception ex){}
@@ -407,17 +406,7 @@ public class GUI extends JXFrame{
 
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
-                  try{ 
-		    			
-						if(Lecteur.state!=SunoneStates.IN_STOP){
-						Lecteur.player.stop();
-						Lecteur.getInstance(Lecteur.STATEFULL).stop();
-						Lecteur.state=SunoneStates.IN_PREVIOUS;
-						Lecteur.getInstance(Lecteur.STATELESS).start();
-    				    System.gc();
-					 }
-				    
-				}catch (Exception ex){}
+                  SunoneLogic.getInstance().previousActionHandled();
 				}
 				
 			});
@@ -431,16 +420,7 @@ public class GUI extends JXFrame{
 
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
-					try{ 
-						if(Lecteur.state!=SunoneStates.IN_STOP){
-						Lecteur.player.stop();
-						Lecteur.getInstance(Lecteur.STATEFULL).stop();
-					}
-				    Lecteur.state=SunoneStates.IN_PLAY;
-				    Lecteur.getInstance(Lecteur.STATELESS).start();
-				    System.gc();
-				    
-				}catch (Exception ex){}
+					SunoneLogic.getInstance().playActionHandled();
 				}
 				
 			});
@@ -456,25 +436,7 @@ public class GUI extends JXFrame{
 
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
-					try{ 
-						if(Lecteur.state!=SunoneStates.IN_STOP)
-							{ 
-							
-								    Lecteur.TIME=Lecteur.player.getMediaTime();
-								    System.out.println(Lecteur.TIME.getSeconds());		    
-								    Lecteur.player.stop();
-								    Lecteur.getInstance(Lecteur.STATEFULL).stop();
-								    Lecteur.state=SunoneStates.IN_STOP;
-                                    Lecteur.PLAYSTATUS=Lecteur.NEXTWASPAUSE;
-							}
-							else{ 
-								Lecteur.state=SunoneStates.IN_PAUSE;
-								Lecteur.getInstance(Lecteur.STATELESS).start();
-							System.gc();
-					}
-								
-						
-				}catch (Exception ex){}
+					SunoneLogic.getInstance().pauseActionHandled();
 				}
 				
 			});
@@ -491,17 +453,7 @@ public class GUI extends JXFrame{
 
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
-                   try{ 
-		    			
-						if(Lecteur.state!=SunoneStates.IN_STOP){
-						Lecteur.player.stop();
-						instance.videoPanel.setVisible(false);
-					    instance.reinitialiseComposantsLecteur();
-					    Lecteur.getInstance(Lecteur.STATEFULL).stop();
-                        System.gc();
-					}
-				    
-				}catch (Exception ex){}
+                  SunoneLogic.getInstance().stopActionHandled();
 				}
 				
 			});
@@ -516,17 +468,7 @@ public class GUI extends JXFrame{
 
 				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
-                 try{ 
-		    			
-						if(Lecteur.state!=SunoneStates.IN_STOP){
-						Lecteur.player.stop();
-						Lecteur.getInstance(Lecteur.STATEFULL).stop();
-						Lecteur.state=SunoneStates.IN_NEXT;
-						Lecteur.getInstance(Lecteur.STATELESS).start();
-    				    System.gc();
-					}
-				    
-				}catch (Exception ex){}
+                 SunoneLogic.getInstance().nextActionHandled();
 				}
 				
 			});
@@ -918,7 +860,7 @@ public class GUI extends JXFrame{
 	
 	static Object[][] data;
 	private JPanel jPanel3 = null; 
-	private JXTable getJTable() throws Exception{
+	public JXTable getJTable() throws Exception{
 		if(logger.isDebugEnabled())
 			logger.debug("Adding PlayList JTable...");
 		if (jTable == null) {
@@ -965,19 +907,24 @@ public class GUI extends JXFrame{
 				public void mouseClicked(MouseEvent e){
 		    		if(e.getClickCount()==2){
 		    			GUI.instance.jTable.setValueAt(" ",Lecteur.CURRENTINDEXMEDIA, 0);
-		    			Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow();
-		    			Lecteur.state=SunoneStates.IN_PLAY;
+		    			
 		    			try{ 
 							if(Lecteur.state!=SunoneStates.IN_STOP){
+								if(videoPanel!=null)
 							instance.remove(videoPanel);
 							Lecteur.player.stop();
-							Lecteur.getInstance(Lecteur.STATEFULL).stop();
-                                                  
-						}
-						
-							Lecteur.getInstance(Lecteur.STATELESS).start();
+							Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow()-1;
+							}
+							else
+								Lecteur.CURRENTINDEXMEDIA=jTable.getSelectedRow();
+							Lecteur.state=SunoneStates.IN_PLAY;
+							System.out.print(Lecteur.state);
+							System.out.print(Lecteur.CURRENTINDEXMEDIA);
+							Lecteur.getInstance(Lecteur.STATEFULL).start();
 					    System.gc();
-					}catch (Exception ex){}		    			
+		    			}
+					catch (Exception ex){
+					}		    			
 		    		}
 		    	}
 		    	public void mousePressed(MouseEvent e){}
@@ -1177,17 +1124,7 @@ public class GUI extends JXFrame{
 			jMenuItem13.setText("Add to Playlist");
 			jMenuItem13.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
-	        		try{
-	        		Playlist.addToPlaylist(getFichier(JFileChooser.FILES_ONLY));
-	        		saveData=new String[Lecteur.CURRENTINDEXMEDIA+1];
-	        		for(int i=0;i<=Lecteur.CURRENTINDEXMEDIA;i++){
-	        			saveData[i]=(String)data[i][2];
-	        		}
-	        		jTable=null;
-					jScrollPane.setViewportView(getJTable());
-					GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-					GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
-	        		}catch(Exception ex){}
+	        		SunoneLogic.getInstance().addToPlaylist();
 	        		}	        	
 	        });
 		}
@@ -1198,17 +1135,7 @@ public class GUI extends JXFrame{
 				jMenuItem132.setText("       Add to Playlist");
 				jMenuItem132.addActionListener(new ActionListener(){
 		        	public void actionPerformed(ActionEvent e){
-		        		try{
-		        		Playlist.addToPlaylist(getFichier(JFileChooser.FILES_ONLY));
-		        		saveData=new String[Lecteur.CURRENTINDEXMEDIA+1];
-		        		for(int i=0;i<=Lecteur.CURRENTINDEXMEDIA;i++){
-		        			saveData[i]=(String)data[i][2];
-		        		}
-		        		jTable=null;
-						jScrollPane.setViewportView(getJTable());
-						GUI.instance.jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
-						GUI.instance.jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
-		        	}catch(Exception ex){}
+		        		SunoneLogic.getInstance().addToPlaylist();
 		        		}	        	
 		        });
 			}
@@ -1224,7 +1151,7 @@ public class GUI extends JXFrame{
 	        jMenuItem14.addActionListener(new ActionListener(){
 	        	public void actionPerformed(ActionEvent e){
 	        		try{	
-	        		Playlist.savePlaylist("Give the Playlist Name");
+	        		SunoneLogic.getInstance().savePlaylist();
 	        	}catch(Exception ex){}
 	        		}
 	        	
@@ -1238,7 +1165,7 @@ public class GUI extends JXFrame{
 		        jMenuItem142.addActionListener(new ActionListener(){
 		        	public void actionPerformed(ActionEvent e){
 		        		try{	
-		        		Playlist.savePlaylist("Give the Playlist Name");
+		        		SunoneLogic.getInstance().savePlaylist();
 		        	}catch(Exception ex){}
 		        		}
 		        	
