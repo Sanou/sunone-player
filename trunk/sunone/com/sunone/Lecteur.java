@@ -24,8 +24,8 @@ public class Lecteur extends Thread {
 	    public static final int NEXTWASSTOP=1;
 	    public static final int REFERENCESTATUS=2;
 	    public static int PLAYSTATUS=REFERENCESTATUS;
-	    public   static Playlist CURRENTPLAYLIST;//contient à chaque fois le nom de la playlist en cours(doit être actualisé regulièrement par play) 
-	    public  static String CURRENTMEDIA;//contient à chaque fois l'url du fichier en cours(doit être actualisé regulièrement par play) 
+	    public   static Playlist CURRENTPLAYLIST; 
+	    public  static String CURRENTMEDIA; 
         public static int CURRENTINDEXMEDIA;
         public static final int STATEFULL=0;
         public static final int STATELESS=1;
@@ -365,12 +365,4 @@ public class Lecteur extends Thread {
 		public void setsStates(SunoneStates state) {
 			Lecteur.state = state;
 		}
-       
-		public void pauseActionHandled(){
-			
-		}
-		public void playActionHandled(){}
-		public void stopActionHandled(){}
-		public void nextActionHandled(){}
-		public void previousActionHandled(){}
 }

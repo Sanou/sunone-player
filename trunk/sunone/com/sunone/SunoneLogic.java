@@ -1,5 +1,7 @@
 package com.sunone;
 
+import javax.swing.JFileChooser;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -95,7 +97,6 @@ public class SunoneLogic {
 		}
 	    
 	}catch (Exception ex){}
-
 	}
 	@SuppressWarnings("deprecation")
 	public void nextActionHandled(){
@@ -110,6 +111,7 @@ public class SunoneLogic {
 		}
 	    
 	}catch (Exception ex){}
+	
 	}
 	@SuppressWarnings("deprecation")
 	public void previousActionHandled(){
@@ -125,5 +127,24 @@ public class SunoneLogic {
 	    
 	}catch (Exception ex){}
 	}
+	
+	void addToPlaylist(){
+		try{
+    		Playlist.addToPlaylist(GUI.getInstance().getFichier(JFileChooser.FILES_ONLY));
+    		GUI.saveData=new String[Lecteur.CURRENTINDEXMEDIA+1];
+    		for(int i=0;i<=Lecteur.CURRENTINDEXMEDIA;i++){
+    			GUI.saveData[i]=(String)GUI.data[i][2];
+    		}
+    		GUI.getInstance().jTable=null;
+			GUI.getInstance().jScrollPane.setViewportView(GUI.getInstance().getJTable());
+			GUI.getInstance().jScrollPane.getVerticalScrollBar().setValue(((4*414)/23)*(Lecteur.CURRENTINDEXMEDIA/4));
+			GUI.getInstance().jTable.setValueAt(GUI.fleche,Lecteur.CURRENTINDEXMEDIA, 0);
+    	}catch(Exception ex){}
+	}
 		
+	void savePlaylist(){
+		try{	
+    		Playlist.savePlaylist("Give the Playlist Name");
+    	}catch(Exception ex){}
+	}
 }
