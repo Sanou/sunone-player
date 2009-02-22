@@ -54,7 +54,7 @@ import javax.swing.JButton;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.ImageIcon;
-// Ce Projet est réalisé par  Diallo Mamadou Sanou et Fetue
+// Ce Projet est rï¿½alisï¿½ par  Diallo Mamadou Sanou et Fetue
 
 public class GUI extends JXFrame{
 	
@@ -356,7 +356,6 @@ public class GUI extends JXFrame{
 			jMenuItem6.setText("Exit");
 			jMenuItem6.addActionListener(new ActionListener(){
 
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					try{
 				   		   SunoneLogic.getInstance().saveSunoneParameters();
@@ -374,7 +373,6 @@ public class GUI extends JXFrame{
 			jMenuItem7 = new JMenuItem("Previous     ALT+R",KeyEvent.VK_R);
 			jMenuItem7.addActionListener(new ActionListener(){
 
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
                   SunoneLogic.getInstance().previousActionHandled();
 				}
@@ -388,7 +386,6 @@ public class GUI extends JXFrame{
 			jMenuItem71 = new JMenuItem("Play              ALT+P",KeyEvent.VK_P);
 			jMenuItem71.addActionListener(new ActionListener(){
 
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					SunoneLogic.getInstance().playActionHandled();
 				}
@@ -404,7 +401,6 @@ public class GUI extends JXFrame{
 			jMenuItem72 = new JMenuItem("Pause          ALT+E",KeyEvent.VK_E);
 			jMenuItem72.addActionListener(new ActionListener(){
 
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
 					SunoneLogic.getInstance().pauseActionHandled();
 				}
@@ -421,7 +417,6 @@ public class GUI extends JXFrame{
 			jMenuItem73 = new JMenuItem("Stop             ALT+S",KeyEvent.VK_S);
 			jMenuItem73.addActionListener(new ActionListener(){
 
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
                   SunoneLogic.getInstance().stopActionHandled();
 				}
@@ -436,7 +431,6 @@ public class GUI extends JXFrame{
 			jMenuItem74 = new JMenuItem("Next             ALT+N",KeyEvent.VK_N);
 			jMenuItem74.addActionListener(new ActionListener(){
 
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e) {
                  SunoneLogic.getInstance().nextActionHandled();
 				}
@@ -668,7 +662,6 @@ public class GUI extends JXFrame{
 			jButton.setSize(new Dimension(50, 50));
 			jButton.setIcon(new ImageIcon(getClass().getResource(configuration.getString("com.sunone.images.previous"))));
 			jButton.addActionListener(new ActionListener(){
-		    	@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
 		    		SunoneLogic.getInstance().previousActionHandled();
 				}
@@ -689,7 +682,6 @@ public class GUI extends JXFrame{
 			jButton1.setFont(new Font("Dialog", Font.BOLD, 12));
 			jButton1.setIcon(new ImageIcon(getClass().getResource(configuration.getString("com.sunone.images.play"))));
 			jButton1.addActionListener(new ActionListener(){
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
 					SunoneLogic.getInstance().playActionHandled();
 					}
@@ -705,7 +697,6 @@ public class GUI extends JXFrame{
 			jButton2.setPreferredSize(new Dimension(48, 30));
 			jButton2.setIcon(new ImageIcon(getClass().getResource(configuration.getString("com.sunone.images.pause"))));
 			jButton2.addActionListener(new ActionListener(){
-				@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
 					SunoneLogic.getInstance().pauseActionHandled();
 					}
@@ -721,7 +712,6 @@ public class GUI extends JXFrame{
 			jButton3.setPreferredSize(new Dimension(48, 30));
 			jButton3.setIcon(new ImageIcon(getClass().getResource(configuration.getString("com.sunone.images.stop"))));
 			jButton3.addActionListener(new ActionListener(){
-		    	@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
 		    		SunoneLogic.getInstance().stopActionHandled();
 		    	}
@@ -739,7 +729,6 @@ public class GUI extends JXFrame{
 			jButton4.setPreferredSize(new Dimension(48, 30));
 			jButton4.setIcon(new ImageIcon(getClass().getResource(configuration.getString("com.sunone.images.next"))));
 		    jButton4.addActionListener(new ActionListener(){
-		    	@SuppressWarnings("deprecation")
 				public void actionPerformed(ActionEvent e){
 		    		SunoneLogic.getInstance().nextActionHandled();
 				}
@@ -861,7 +850,6 @@ public class GUI extends JXFrame{
 		    jTable.getColumnModel().getColumn(2).setPreferredWidth(60);
 		    jTable.getColumnModel().getColumn(1).setPreferredWidth(250);
 		    jTable.addMouseListener(new MouseListener(){
-		    	@SuppressWarnings("deprecation")
 				public void mouseClicked(MouseEvent e){
 		    		if(e.getClickCount()==2){
 		    			SunoneLogic.getInstance().doubleClickHandled(jTable.getSelectedRow());
@@ -1153,7 +1141,6 @@ public class GUI extends JXFrame{
 	public static String messageDialog2(String s){
 		return JOptionPane.showInputDialog(s,"SunOne");
 	}
-	@SuppressWarnings("deprecation")
 	public  void createOpenItem(String s)throws Exception{
 		final String st=s;
 		    String st2[];
@@ -1191,7 +1178,6 @@ public class GUI extends JXFrame{
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public  void createdeleteItem(String s)throws Exception{
 	// On retire le chemin et on garde le nom de la playlist
 		     final String st=s;
@@ -1351,7 +1337,6 @@ public class GUI extends JXFrame{
 		    }
 	}
 	static JMenuItem jmi=null;
-	@SuppressWarnings("deprecation")
 	public static void thelast(){
 		try{
 			
@@ -1399,7 +1384,6 @@ String themepack = args;
 		initialize();
 		}catch(Exception e){}
 	}
-	@SuppressWarnings("deprecation")
 	private void scanPlaylist()throws Exception{
 		String s=SunoneLogic.getInstance().getCurrentPlaylist().getName().substring(0,SunoneLogic.getInstance().getCurrentPlaylist().getName().length()-20);
 		File[] f=new File(s).listFiles();
@@ -1420,7 +1404,6 @@ String themepack = args;
 		    br.close();	
 		}
 	}
-	@SuppressWarnings("deprecation")
 	private void initialize() throws Exception{
 		if(logger.isDebugEnabled())
 			logger.debug("Initialising player.");
@@ -1461,15 +1444,14 @@ String themepack = args;
 	 
 }  
  class FiltreMultiple extends FileFilter{
-	 //Description et extension acceptée par le filtre
+	 //Description et extension acceptï¿½e par le filtre
 	private String description;
 	private String extension;
 	private ArrayList<String> acceptedExtensions = new ArrayList<String>();
 	
-		@SuppressWarnings("unchecked")
 		public FiltreMultiple(String description, String extensions){
 		if(description == null || extensions ==null){
-			throw new NullPointerException("La description (ou extension) ne peut être null.");
+			throw new NullPointerException("La description (ou extension) ne peut ï¿½tre null.");
 		}
 		
 		this.description = description;
@@ -1483,8 +1465,8 @@ String themepack = args;
 	}
  
 	/**
-	* Méthode qui dit si un fichier doit etre affiché ou pas en fonction de son extension
-	* @param file Fichier qui demande à etre accepté ou pas
+	* Mï¿½thode qui dit si un fichier doit etre affichï¿½ ou pas en fonction de son extension
+	* @param file Fichier qui demande ï¿½ etre acceptï¿½ ou pas
 	*/
 	public boolean accept(File file){
 		String nomFichier = file.getName().toLowerCase(); 
@@ -1502,7 +1484,7 @@ String themepack = args;
 	}
  
 	/**
-	* Méthode qui retourne la description du filtre
+	* Mï¿½thode qui retourne la description du filtre
 	*/
 	public String getDescription(){
 		return description;
