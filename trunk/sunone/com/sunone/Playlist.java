@@ -74,8 +74,8 @@ public class Playlist {
 		new File(Lecteur.CURRENTPLAYLIST.NAME).delete();
 		(new File(Lecteur.CURRENTPLAYLIST.NAME.substring(0, Lecteur.CURRENTPLAYLIST.NAME.length()-19)+"wssederdferdtdfdgetrdfdte.pl")).renameTo(new File(Lecteur.CURRENTPLAYLIST.NAME));
 	}
-	//c'est 2 methodes d'ajouter un ou des medias dans la playlist répèré par CURRENTPLAYLIST a partir de
-	//l'index en cours répèré par CURRENTINDEXMEDIA
+	//c'est 2 methodes d'ajouter un ou des medias dans la playlist rï¿½pï¿½rï¿½ par CURRENTPLAYLIST a partir de
+	//l'index en cours rï¿½pï¿½rï¿½ par CURRENTINDEXMEDIA
 	public static void removeFromPlaylist(int[] index)throws Exception{
 		if(logger.isDebugEnabled())
 			logger.debug("Remove from playlist.");
@@ -145,7 +145,7 @@ public class Playlist {
 			  }
 			 clearPlaylist(Lecteur.CURRENTPLAYLIST);
 		
-//		Ici on doit initialiser INDEXOFMEDIA à 1 
+//		Ici on doit initialiser INDEXOFMEDIA ï¿½ 1 
 	}
 	public static void clearPlaylist(Playlist pl)throws Exception{
 		String s=pl.NAME;
@@ -213,7 +213,6 @@ public class Playlist {
 		}catch(Exception e){}
 		return i;
 	}
-	@SuppressWarnings("deprecation")
 	public  void cutPlaylist()throws Exception{
 		if(logger.isDebugEnabled())
 			logger.debug("Cut Playlist.");
