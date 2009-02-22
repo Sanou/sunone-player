@@ -57,10 +57,10 @@ public class Lecteur extends Thread {
     	}
         
        public static SunoneStates state=SunoneStates.IN_STOP; 
-       //Aucune des methodes de cette classe n'est directement invoquée
-        // toutes les méthodes sont appélés via la méthode run() qui est invoquée à l'instanciation
+       //Aucune des methodes de cette classe n'est directement invoquï¿½e
+        // toutes les mï¿½thodes sont appï¿½lï¿½s via la mï¿½thode run() qui est invoquï¿½e ï¿½ l'instanciation
          // de la thread Lecteur et auparavant, nous positionnons juste l'attribut CURRENTMETHODE 
-        //qui décide la quelle des méthodes appéler.
+        //qui dï¿½cide la quelle des mï¿½thodes appï¿½ler.
         public void run(){
         	try{
         		
@@ -96,64 +96,63 @@ public class Lecteur extends Thread {
 	     }catch(Exception ex){}
         }
 	    
-        //la méthode play() sans arguments  appelle juste la methode play(Playlist playlist,int indexofmedia)
-        // à une position bien specifié 
+        //la mï¿½thode play() sans arguments  appelle juste la methode play(Playlist playlist,int indexofmedia)
+        // ï¿½ une position bien specifiï¿½ 
         public static void play()throws Exception{
 	            play(CURRENTPLAYLIST,CURRENTINDEXMEDIA); 
 	    }	           
         
-        // la methode play avec des paramètres gère toute la logique metier de lecture c'est le Model dans 
+        // la methode play avec des paramï¿½tres gï¿½re toute la logique metier de lecture c'est le Model dans 
         // l'architecture MVC.
         
-        @SuppressWarnings("deprecation")
 		public static void play(Playlist playlist,int indexofmedia)throws Exception{
-        	// la valeur x est utilisée pour le positionnement du JScroolPane de la JTable 
-        	// la valeur qu'elle cotient à été choisit par des experiences que nous avons réalisés
+        	// la valeur x est utilisï¿½e pour le positionnement du JScroolPane de la JTable 
+        	// la valeur qu'elle cotient ï¿½ ï¿½tï¿½ choisit par des experiences que nous avons rï¿½alisï¿½s
         	instance.setsStates(SunoneStates.IN_PLAY);
         	int x=(4*414)/23;
-        	// recupération du chemin d'une musique dans la playlist
-        	//la méthode open file est définie dans la classe FileEdited permet juste de lire et renvoyer le chemin d'un fichier
+        	// recupï¿½ration du chemin d'une musique dans la playlist
+        	//la mï¿½thode open file est dï¿½finie dans la classe FileEdited permet juste de lire et renvoyer le chemin d'un fichier
         	   BufferedReader br=FileEdited.openFile(playlist.getName(), indexofmedia);
         	   String s=br.readLine();
         	    br.close();
         	CURRENTMEDIA=s;
         	 
-           	do{//debut la grande boucle qui boucle jusqu'à la fin du fin de la playlist et répète eventuellement lorsque Repeter la playlist(REPEATPLAYLIST) est activée
-        	while(s!=null){//boucle de lecture jusqu'à la fin du fichier afin de reinitialiser
-        		           // les paramètres pour la lecture avant de tester repeatPlaylist.
+           	do{//debut la grande boucle qui boucle jusqu'ï¿½ la fin du fin de la playlist et rï¿½pï¿½te eventuellement lorsque Repeter la playlist(REPEATPLAYLIST) est activï¿½e
+        	while(s!=null){//boucle de lecture jusqu'ï¿½ la fin du fichier afin de reinitialiser
+        		           // les paramï¿½tres pour la lecture avant de tester repeatPlaylist.
         		
-        	if(s!=null)// debut du trraitement pour chaque fichier multimedia dont le chemin a été lu dans la playlist.
+        	if(s!=null)// debut du trraitement pour chaque fichier multimedia dont le chemin a ï¿½tï¿½ lu dans la playlist.
         	{    
-        		// localisation du média grâce à la classe Medialocator de JMF
+        		// localisation du mï¿½dia grï¿½ce ï¿½ la classe Medialocator de JMF
         		// cette methode permet d'encapsuler le media elle permet nous permet donc 
-        		// de faire abstraction du format du fichier utilié ( qu'il soit  mp3,mpg, avi ou autres)
+        		// de faire abstraction du format du fichier utiliï¿½ ( qu'il soit  mp3,mpg, avi ou autres)
         		MediaLocator mediaLocator=new MediaLocator((new File(s).toURL()).toString());
        	      do{//debut de la boucle dont la condition de sortit est que repeter musique 
-       	    	  //ne soit pas activé.si REPEATMEDIA est activé il repete la même musique.
+       	    	  //ne soit pas activï¿½.si REPEATMEDIA est activï¿½ il repete la mï¿½me musique.
         		  try {
         			  
         			  //creation du player.  c'est sur lui que le traitement se fait
         			  // on utilise la classe Manager qui est le gestionnaire permettant return 
-        			  // un player (qui est en fait une thread) et c'est sur elle que les opérations de lecture se feront.
+        			  // un player (qui est en fait une thread) et c'est sur elle que les opï¿½rations de lecture se feront.
          			  player=Manager.createPlayer(mediaLocator);
          	         
-         			  //ajout du listener qui permet d'écouter les differents phases par lesquels passent 
+         			  //ajout du listener qui permet d'ï¿½couter les differents phases par lesquels passent 
          			  //le player: de la realisation au debut de la lecture comme nous le verons dans son code 
                      player.addControllerListener(new ControllerAdapter(){
                       double dureeTotale=0;
                       
                       
-                 	  //permet d'écouter la fin de la réalisation du media cet état ne peut être atteint que lorsque 
-                      // la méthode realise() a été appelé auparavant.
-                      //lorsque la réalisation se termine par exemple par exemple, on peut retirer plusieurs 
-                      //propriété du media. Comme la durée totale
+                 	  //permet d'ï¿½couter la fin de la rï¿½alisation du media cet ï¿½tat ne peut ï¿½tre atteint que lorsque 
+                      // la mï¿½thode realise() a ï¿½tï¿½ appelï¿½ auparavant.
+                      //lorsque la rï¿½alisation se termine par exemple par exemple, on peut retirer plusieurs 
+                      //propriï¿½tï¿½ du media. Comme la durï¿½e totale
                     public void realizeComplete(RealizeCompleteEvent re){
-                    	//recuperation de la durée du media.
+                    	//recuperation de la durï¿½e du media.
               		  dureeTotale= player.getDuration().getSeconds();
               		  try{
               			  if(PLAYSTATUS!=NEXTWASPAUSE){
               				  //quelques initialisations des labels centraux de l'interface graphique
-              				  // aussi bien celui du nom de l'artiste que celui de la durée totale de la musique
+              				  // aussi bien celui du nom de l'artiste que celui de la durï¿½e totale de la musique
                       		  GUI.getInstance().jLabel6.setText("00:00/00:00");
                       		  GUI.getInstance().jLabel.setText(getArtistName(CURRENTMEDIA));
                       		  GUI.getInstance().jSlider1.setValue(0);
@@ -264,8 +263,8 @@ public class Lecteur extends Thread {
         	br.close();
         	CURRENTMEDIA=s;
         	 } // fin de while on a atteint la fin du fichier
-        	  // est assez important car il faut reinitialiser les paramètres  et tester si repeat eat actif
-        	 // c'est à dire se replacer au debut du fichier.
+        	  // est assez important car il faut reinitialiser les paramï¿½tres  et tester si repeat eat actif
+        	 // c'est ï¿½ dire se replacer au debut du fichier.
             br=FileEdited.openFile(playlist.NAME, 0);
             s=br.readLine();
             br.close();
@@ -276,7 +275,7 @@ public class Lecteur extends Thread {
         	while(REPEATPLAYLIST==ACTIVE);//fin de la grande boucle qui tete repeat playlist 
         	
         	}
-        // appelle la methode play précedente avec indexofmedia=0
+        // appelle la methode play prï¿½cedente avec indexofmedia=0
         public static void play (Playlist playlist)throws Exception{
         	play(playlist,0);
         }       
@@ -342,7 +341,6 @@ public class Lecteur extends Thread {
             s2="0"+s2;
         	       		return s+":"+s2;
         }
-        @SuppressWarnings("deprecation")
 		public static String getArtistName(String st)throws Exception{
         	st=new File(st).toURL().toString();
 		    String st2[]=st.split("/");
