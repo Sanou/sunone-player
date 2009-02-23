@@ -58,24 +58,27 @@ import com.l2fprod.gui.plaf.skin.*;
 /**
  * demoWelcome.<BR>
  * Shows the Welcome screen and the combobox to select a skin.
- *
- * @author    fred
- * @created   27 avril 2002
+ * 
+ * @author fred
+ * @created 27 avril 2002
  */
-public class demoWelcome extends JPanel {
+public class demoWelcome extends JPanel
+{
 
   /**
 	 * 
 	 */
-	private static final long serialVersionUID = 7067574731648555596L;
-JComboBox m_Themes;
+  private static final long serialVersionUID = 7067574731648555596L;
+  JComboBox m_Themes;
 
   /**
    * Constructor for the demoWelcome object
-   *
-   * @param themes  Description of Parameter
+   * 
+   * @param themes
+   *          Description of Parameter
    */
-  public demoWelcome(String[] themes) {
+  public demoWelcome(String[] themes)
+  {
     setBorder(new EmptyBorder(10, 10, 10, 10));
 
     setLayout(new BorderLayout(10, 10));
@@ -107,51 +110,60 @@ JComboBox m_Themes;
     area.setBorder(null);
     area.setEditable(false);
     area.setOpaque(false);
-    area.setText("Welcome to Skin Look And Feel " + SkinLookAndFeel.version() + "\n" +
-        "Use the combobox above to test the various themepacks available.\n");
+    area.setText("Welcome to Skin Look And Feel " + SkinLookAndFeel.version() + "\n" + "Use the combobox above to test the various themepacks available.\n");
     area.setBackground(getBackground());
     p.add(area);
     p.add(new JSeparator());
     p.add(new JLabel("Available Themepacks:"));
     p.add(m_Themes = new JComboBox(themes));
 
-    m_Themes.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent event) {
-          setTheme((String) m_Themes.getSelectedItem());
-        }
-      });
+    m_Themes.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent event)
+      {
+        setTheme((String) m_Themes.getSelectedItem());
+      }
+    });
 
-    //    setTheme(themes[0]);
+    // setTheme(themes[0]);
     right.add("North", p);
     right.add("East", new JSeparator(JSeparator.VERTICAL));
-    //    right.add("Center", new VuMeter(15));
+    // right.add("Center", new VuMeter(15));
   }
 
   /**
    * Sets the Theme attribute of the demoWelcome object
-   *
-   * @param selectedItem  The new Theme value
+   * 
+   * @param selectedItem
+   *          The new Theme value
    */
-  void setTheme(String selectedItem) {
-    try {
-      if (selectedItem.endsWith(".xml")) {
+  void setTheme(String selectedItem)
+  {
+    try
+    {
+      if (selectedItem.endsWith(".xml"))
+      {
         SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePackDefinition(SkinUtils.toURL(new File(selectedItem))));
       }
-      else {
+      else
+      {
         SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(selectedItem));
       }
       UIManager.setLookAndFeel(new SkinLookAndFeel());
 
       Component c = SwingUtilities.getAncestorOfClass(java.awt.Window.class, this);
-      if (c == null) {
+      if (c == null)
+      {
         c = SwingUtilities.getAncestorOfClass(demo.class, this);
       }
 
-      if (c != null) {
+      if (c != null)
+      {
         SwingUtilities.updateComponentTreeUI(c);
       }
-    } catch (Exception e) {
+    }
+    catch(Exception e)
+    {
       e.printStackTrace();
     }
     // end of try-catch
@@ -159,26 +171,29 @@ JComboBox m_Themes;
 
   /**
    * Description of the Class
-   *
-   * @author    fred
-   * @created   27 avril 2002
+   * 
+   * @author fred
+   * @created 27 avril 2002
    */
-  static class VuMeter extends JPanel {
+  static class VuMeter extends JPanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 6968951991335634524L;
-	double[] bars;
+    private static final long serialVersionUID = 6968951991335634524L;
+    double[] bars;
     int[] barDirections;
 
-    //    CellRendererPane cellRenderer = new CellRendererPane();
+    // CellRendererPane cellRenderer = new CellRendererPane();
 
     /**
      * Constructor for the VuMeter object
-     *
-     * @param barCount  Description of Parameter
+     * 
+     * @param barCount
+     *          Description of Parameter
      */
-    public VuMeter(int barCount) {
+    public VuMeter(int barCount)
+    {
       setPreferredSize(new Dimension(100, 100));
       setOpaque(true);
       setBackground(Color.white);
@@ -186,70 +201,83 @@ JComboBox m_Themes;
       bars = new double[barCount];
       barDirections = new int[barCount];
       Arrays.fill(barDirections, 1);
-      Thread runner =
-        new Thread() {
-          public void run() {
-            while (true) {
-              try {
-                if (VuMeter.this.isVisible()) {
-                  VuMeter.this.repaint();
-                }
-                Thread.sleep(500);
-              } catch (Exception e) {
+      Thread runner = new Thread()
+      {
+        public void run()
+        {
+          while (true)
+          {
+            try
+            {
+              if (VuMeter.this.isVisible())
+              {
+                VuMeter.this.repaint();
               }
+              Thread.sleep(500);
             }
+            catch(Exception e)
+            {}
           }
-        };
+        }
+      };
       runner.start();
       runner.setPriority(Thread.MIN_PRIORITY);
 
-      //      add(cellRenderer);
+      // add(cellRenderer);
     }
 
     /**
      * Description of the Method
-     *
-     * @param g  Description of Parameter
+     * 
+     * @param g
+     *          Description of Parameter
      */
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
       g.setColor(getParent().getBackground());
       g.fillRect(0, 0, getWidth(), getHeight());
 
       int w = getWidth() / bars.length;
       int barHeight;
 
-      for (int i = 0, c = bars.length; i < c; i++) {
+      for (int i = 0, c = bars.length; i < c; i++)
+      {
         double speed = Math.random() * 0.3;
         bars[i] += (speed * barDirections[i]);
-        if (bars[i] >= 1) {
+        if (bars[i] >= 1)
+        {
           bars[i] = 1;
           barDirections[i] = -1;
         }
-        else if (bars[i] <= 0) {
+        else if (bars[i] <= 0)
+        {
           bars[i] = 0;
           barDirections[i] = 1;
         }
         barHeight = (int) (getHeight() * bars[i]);
-        paintBar(g,
-            new Rectangle(i * w, getHeight() - barHeight, w - 2, barHeight),
-            new Rectangle(i * w, 0, w - 2, getHeight()),
-            bars[i],
-            barDirections[i]);
+        paintBar(g, new Rectangle(i * w, getHeight() - barHeight, w - 2, barHeight), new Rectangle(i * w, 0, w - 2, getHeight()), bars[i], barDirections[i]);
       }
     }
 
     /**
      * Description of the Method
-     *
-     * @param g             Description of Parameter
-     * @param barRect       Description of Parameter
-     * @param fullRect      Description of Parameter
-     * @param barValue      Description of Parameter
-     * @param barDirection  Description of Parameter
+     * 
+     * @param g
+     *          Description of Parameter
+     * @param barRect
+     *          Description of Parameter
+     * @param fullRect
+     *          Description of Parameter
+     * @param barValue
+     *          Description of Parameter
+     * @param barDirection
+     *          Description of Parameter
      */
-    protected void paintBar(Graphics g, Rectangle barRect, Rectangle fullRect, double barValue, int barDirection) {
-      //renderer.setValue((int)(barValue * 100));
-      //cellRenderer.paintComponent(g, renderer, this, fullRect.x, fullRect.y, fullRect.width, fullRect.height);
+    protected void paintBar(Graphics g, Rectangle barRect, Rectangle fullRect, double barValue, int barDirection)
+    {
+      // renderer.setValue((int)(barValue * 100));
+      // cellRenderer.paintComponent(g, renderer, this, fullRect.x, fullRect.y,
+      // fullRect.width, fullRect.height);
       g.setColor(getParent().getBackground().brighter());
       g.fillRect(fullRect.x, fullRect.y, fullRect.width, fullRect.height);
       g.setColor(getParent().getBackground().darker());
@@ -257,7 +285,7 @@ JComboBox m_Themes;
       g.fillRect(barRect.x, barRect.y, barRect.width, barRect.height);
     }
 
-    //    JProgressBar renderer = new JProgressBar(JProgressBar.VERTICAL);
+    // JProgressBar renderer = new JProgressBar(JProgressBar.VERTICAL);
   }
 
 }

@@ -47,6 +47,7 @@
  */
 
 package com.sunone;
+
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 import com.l2fprod.util.AccessUtils;
 import com.l2fprod.util.OS;
@@ -69,25 +70,28 @@ import javax.swing.table.TableColumn;
 
 /**
  * Simple Test Panel for a Look And Feel
- *
- * @author    $Author: l2fprod $
- * @created   27 avril 2002
- * @version   $Revision: 1.11 $, $Date: 2005/10/09 13:28:15 $
+ * 
+ * @author $Author: l2fprod $
+ * @created 27 avril 2002
+ * @version $Revision: 1.11 $, $Date: 2005/10/09 13:28:15 $
  */
-public class demoPanel extends JPanel {
+public class demoPanel extends JPanel
+{
 
   /**
 	 * 
 	 */
-	private static final long serialVersionUID = -4211565121903095436L;
-demoWelcome m_Welcome;
+  private static final long serialVersionUID = -4211565121903095436L;
+  demoWelcome m_Welcome;
 
   /**
    * Constructor for the demoPanel object
-   *
-   * @param themes  Description of Parameter
+   * 
+   * @param themes
+   *          Description of Parameter
    */
-  public demoPanel(String[] themes) {
+  public demoPanel(String[] themes)
+  {
     setLayout(new BorderLayout(3, 3));
 
     // Create the menu bar
@@ -95,38 +99,39 @@ demoWelcome m_Welcome;
     JMenu menu = new JMenu("File");
     menu.setMnemonic('f');
     menu.add(new JMenuItem("Save"));
-    menu.add(
-      new AbstractAction("Open") {
-        /**
+    menu.add(new AbstractAction("Open")
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = 1203745476323700314L;
+      private static final long serialVersionUID = 1203745476323700314L;
 
-		@SuppressWarnings("unchecked")
-		public void actionPerformed(ActionEvent event) {
-          try {
-            // are we running in JavaWebStart?
-            Class serviceClass = Class.forName("javax.jnlp.ServiceManager");
-            Object fileOpenService = serviceClass.
-              getMethod("lookup", new Class[]{String.class}).
-              invoke(null, new Object[]{"javax.jnlp.FileOpenService"});
-            fileOpenService.getClass().
-              getMethod("openFileDialog", new Class[]{String.class, String[].class}).
-              invoke(fileOpenService, new Object[]{null, null});
-          } catch (Exception e) {
-            System.err.println("Error trying JavaWebStart, will default to JFileChooser:" + e.getMessage());
-            new JFileChooser().showDialog(demoPanel.this, "Ok");
-          }
+      @SuppressWarnings("unchecked")
+      public void actionPerformed(ActionEvent event)
+      {
+        try
+        {
+          // are we running in JavaWebStart?
+          Class serviceClass = Class.forName("javax.jnlp.ServiceManager");
+          Object fileOpenService = serviceClass.getMethod("lookup", new Class[] { String.class }).invoke(null, new Object[] { "javax.jnlp.FileOpenService" });
+          fileOpenService.getClass().getMethod("openFileDialog", new Class[] { String.class, String[].class }).invoke(fileOpenService, new Object[] { null, null });
         }
-      });
+        catch(Exception e)
+        {
+          System.err.println("Error trying JavaWebStart, will default to JFileChooser:" + e.getMessage());
+          new JFileChooser().showDialog(demoPanel.this, "Ok");
+        }
+      }
+    });
     menu.addSeparator();
     JMenuItem item = new JMenuItem("Exit");
-    item.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent event) {
-          exit();
-        }
-      });
+    item.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent event)
+      {
+        exit();
+      }
+    });
     menu.add(item);
     menubar.add(menu);
 
@@ -148,21 +153,23 @@ demoWelcome m_Welcome;
 
     JPanel buttonPane = new JPanel(new VerticalLayout(3));
     JButton button = new JButton("Rollover");
-    ButtonModel model =
-      new DefaultButtonModel() {
-        /**
+    ButtonModel model = new DefaultButtonModel()
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = -5548996991246023110L;
+      private static final long serialVersionUID = -5548996991246023110L;
 
-		public boolean isSelected() {
-          return true;
-        }
+      public boolean isSelected()
+      {
+        return true;
+      }
 
-        public boolean isRollover() {
-          return true;
-        }
-      };
+      public boolean isRollover()
+      {
+        return true;
+      }
+    };
     button.setModel(model);
     buttonPane.add(button);
     buttonPane.add(button = new JButton("Normal"));
@@ -170,25 +177,28 @@ demoWelcome m_Welcome;
 
     button = new JButton("Pressed");
     button.setForeground(Color.red);
-    model =
-      new DefaultButtonModel() {
-        /**
+    model = new DefaultButtonModel()
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = -2077947528001751465L;
+      private static final long serialVersionUID = -2077947528001751465L;
 
-		public boolean isPressed() {
-          return true;
-        }
+      public boolean isPressed()
+      {
+        return true;
+      }
 
-        public boolean isArmed() {
-          return true;
-        }
+      public boolean isArmed()
+      {
+        return true;
+      }
 
-        public boolean isSelected() {
-          return true;
-        }
-      };
+      public boolean isSelected()
+      {
+        return true;
+      }
+    };
     button.setModel(model);
     buttonPane.add(button);
     button = new JButton("Disabled");
@@ -236,13 +246,12 @@ demoWelcome m_Welcome;
     common.add(toggle);
     toggleGroup.add(toggle);
 
-    JPanel grid = new JPanel(new GridLayout(OS.isOneDotFour()?3:2, 1));
+    JPanel grid = new JPanel(new GridLayout(OS.isOneDotFour() ? 3 : 2, 1));
     // add the progress bar with indeterminate state if JDK1.4
-    if (OS.isOneDotFour()) {
+    if (OS.isOneDotFour())
+    {
       JProgressBar indeterminate = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
-      AccessUtils.invoke(indeterminate, "setIndeterminate",
-                         new Class[]{boolean.class},
-                         new Object[]{Boolean.TRUE});
+      AccessUtils.invoke(indeterminate, "setIndeterminate", new Class[] { boolean.class }, new Object[] { Boolean.TRUE });
       grid.add(indeterminate);
     }
 
@@ -277,50 +286,54 @@ demoWelcome m_Welcome;
 
     JMenu tabPlacement = new JMenu("Tab Placement");
     tabPlacement.setMnemonic('t');
-    tabPlacement.add(
-      new AbstractAction("TOP") {
-        /**
+    tabPlacement.add(new AbstractAction("TOP")
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = 8063242025442787367L;
+      private static final long serialVersionUID = 8063242025442787367L;
 
-		public void actionPerformed(ActionEvent event) {
-          tabs.setTabPlacement(JTabbedPane.TOP);
-        }
-      });
-    tabPlacement.add(
-      new AbstractAction("BOTTOM") {
-        /**
+      public void actionPerformed(ActionEvent event)
+      {
+        tabs.setTabPlacement(JTabbedPane.TOP);
+      }
+    });
+    tabPlacement.add(new AbstractAction("BOTTOM")
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = 6865175690644712857L;
+      private static final long serialVersionUID = 6865175690644712857L;
 
-		public void actionPerformed(ActionEvent event) {
-          tabs.setTabPlacement(JTabbedPane.BOTTOM);
-        }
-      });
-    tabPlacement.add(
-      new AbstractAction("LEFT") {
-        /**
+      public void actionPerformed(ActionEvent event)
+      {
+        tabs.setTabPlacement(JTabbedPane.BOTTOM);
+      }
+    });
+    tabPlacement.add(new AbstractAction("LEFT")
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = -8922042041083176281L;
+      private static final long serialVersionUID = -8922042041083176281L;
 
-		public void actionPerformed(ActionEvent event) {
-          tabs.setTabPlacement(JTabbedPane.LEFT);
-        }
-      });
-    tabPlacement.add(
-      new AbstractAction("RIGHT") {
-        /**
+      public void actionPerformed(ActionEvent event)
+      {
+        tabs.setTabPlacement(JTabbedPane.LEFT);
+      }
+    });
+    tabPlacement.add(new AbstractAction("RIGHT")
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = 788437490038491890L;
+      private static final long serialVersionUID = 788437490038491890L;
 
-		public void actionPerformed(ActionEvent event) {
-          tabs.setTabPlacement(JTabbedPane.RIGHT);
-        }
-      });
+      public void actionPerformed(ActionEvent event)
+      {
+        tabs.setTabPlacement(JTabbedPane.RIGHT);
+      }
+    });
     menubar.add(tabPlacement);
 
     add("Center", tabs);
@@ -339,46 +352,52 @@ demoWelcome m_Welcome;
     menu = new JMenu("Help");
     menu.setMnemonic('h');
     menu.setToolTipText("Show the help!");
-    menu.add(
-      new AbstractAction("About " + SkinLookAndFeel.version()) {
-        /**
+    menu.add(new AbstractAction("About " + SkinLookAndFeel.version())
+    {
+      /**
 		 * 
 		 */
-		private static final long serialVersionUID = 5888879922531952311L;
+      private static final long serialVersionUID = 5888879922531952311L;
 
-		public void actionPerformed(ActionEvent event) {
-          JOptionPane.showMessageDialog(demoPanel.this,
-              "SkinLookAndFeel "
-            	+ SkinLookAndFeel.version() + " build " + SkinLookAndFeel.date()
-            	+ "\n" + "(c) 2000-2005 L2FProd.com");
-        }
-      });
+      public void actionPerformed(ActionEvent event)
+      {
+        JOptionPane.showMessageDialog(demoPanel.this, "SkinLookAndFeel " + SkinLookAndFeel.version() + " build " + SkinLookAndFeel.date() + "\n" + "(c) 2000-2005 L2FProd.com");
+      }
+    });
     menubar.add(menu);
   }
 
   /**
    * Description of the Method
    */
-  void exit() {
+  void exit()
+  {
     System.exit(0);
   }
 
-  final static Border EMPTY_BORDER = new EmptyBorder(4,4,4,4);
+  final static Border EMPTY_BORDER = new EmptyBorder(4, 4, 4, 4);
 
-  static class BasePanel extends JPanel {
+  static class BasePanel extends JPanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 997429874039569654L;
-	public BasePanel() {
+    private static final long serialVersionUID = 997429874039569654L;
+
+    public BasePanel()
+    {
       super();
       setBorder(EMPTY_BORDER);
     }
-    public BasePanel(LayoutManager p_Layout) {
+
+    public BasePanel(LayoutManager p_Layout)
+    {
       super(p_Layout);
       setBorder(EMPTY_BORDER);
     }
-    public BasePanel(Component c) {
+
+    public BasePanel(Component c)
+    {
       this(new BorderLayout());
       add("Center", c);
     }
@@ -386,40 +405,43 @@ demoWelcome m_Welcome;
 
   /**
    * Description of the Class
-   *
-   * @author    fred
-   * @created   27 avril 2002
+   * 
+   * @author fred
+   * @created 27 avril 2002
    */
-  static class MemoryPanel extends JPanel {
+  static class MemoryPanel extends JPanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 3652099704363099797L;
+    private static final long serialVersionUID = 3652099704363099797L;
 
-	/**
+    /**
      * Constructor for the MemoryPanel object
      */
-    MemoryPanel() {
+    MemoryPanel()
+    {
       setLayout(new FlowLayout(FlowLayout.LEFT));
       JButton b = new JButton("gc()");
-      b.addActionListener(
-        new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            Runtime.getRuntime().gc();
-          }
-        });
+      b.addActionListener(new ActionListener()
+      {
+        public void actionPerformed(ActionEvent event)
+        {
+          Runtime.getRuntime().gc();
+        }
+      });
       add(b);
 
       final JLabel memory;
       add(memory = new JLabel(" "));
 
-      Timer t = new Timer(1000,
-        new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            memory.setText(" Free: " + Runtime.getRuntime().freeMemory() +
-                " Total: " + Runtime.getRuntime().totalMemory());
-          }
-        });
+      Timer t = new Timer(1000, new ActionListener()
+      {
+        public void actionPerformed(ActionEvent event)
+        {
+          memory.setText(" Free: " + Runtime.getRuntime().freeMemory() + " Total: " + Runtime.getRuntime().totalMemory());
+        }
+      });
       t.setRepeats(true);
       t.start();
     }
@@ -427,57 +449,58 @@ demoWelcome m_Welcome;
 
   /**
    * Description of the Class
-   *
-   * @author    fred
-   * @created   27 avril 2002
+   * 
+   * @author fred
+   * @created 27 avril 2002
    */
-  static class SplitTest extends BasePanel {
+  static class SplitTest extends BasePanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -4776677074817619021L;
+    private static final long serialVersionUID = -4776677074817619021L;
 
-	/**
+    /**
      * Constructor for the SplitTest object
      */
-    SplitTest() {
+    SplitTest()
+    {
       setLayout(new BorderLayout());
       JButton button;
-      final JSplitPane innerSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-          new JScrollPane(new JTree()),
-          button = new JButton("Split!"));
-      final JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-          new JScrollPane(new JTree()),
-          innerSplit);
+      final JSplitPane innerSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(new JTree()), button = new JButton("Split!"));
+      final JSplitPane split1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(new JTree()), innerSplit);
       add("Center", split1);
       innerSplit.setBorder(null);
       split1.setBorder(null);
-      button.addActionListener(
-        new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            innerSplit.setOneTouchExpandable(!innerSplit.isOneTouchExpandable());
-            split1.setOneTouchExpandable(!split1.isOneTouchExpandable());
-          }
-        });
+      button.addActionListener(new ActionListener()
+      {
+        public void actionPerformed(ActionEvent event)
+        {
+          innerSplit.setOneTouchExpandable(!innerSplit.isOneTouchExpandable());
+          split1.setOneTouchExpandable(!split1.isOneTouchExpandable());
+        }
+      });
     }
   }
 
   /**
    * Description of the Class
-   *
-   * @author    fred
-   * @created   27 avril 2002
+   * 
+   * @author fred
+   * @created 27 avril 2002
    */
-  static class InternalTest extends BasePanel {
+  static class InternalTest extends BasePanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 6650048673753201761L;
+    private static final long serialVersionUID = 6650048673753201761L;
 
-	/**
+    /**
      * Constructor for the InternalTest object
      */
-    InternalTest() {
+    InternalTest()
+    {
       setLayout(new BorderLayout());
       JDesktopPane desk = new JDesktopPane();
       add("Center", new JScrollPane(desk));
@@ -489,60 +512,67 @@ demoWelcome m_Welcome;
       frame.setVisible(true);
       frame.setSize(200, 100);
       frame.setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
-      frame.addVetoableChangeListener(
-        new VetoableChangeListener() {
-          public void vetoableChange(PropertyChangeEvent event) throws PropertyVetoException {
-            if (event.getPropertyName().equals(JInternalFrame.IS_CLOSED_PROPERTY) &&
-                Boolean.TRUE.equals(event.getNewValue())) {
-              JOptionPane.showMessageDialog((JInternalFrame) event.getSource(),
-                  "You can veto Frame Closing here!");
-              throw new PropertyVetoException("don't close!", event);
-            }
-            // end of if (event.getPropertyName().equals()
+      frame.addVetoableChangeListener(new VetoableChangeListener()
+      {
+        public void vetoableChange(PropertyChangeEvent event)
+            throws PropertyVetoException
+        {
+          if (event.getPropertyName().equals(JInternalFrame.IS_CLOSED_PROPERTY) && Boolean.TRUE.equals(event.getNewValue()))
+          {
+            JOptionPane.showMessageDialog((JInternalFrame) event.getSource(), "You can veto Frame Closing here!");
+            throw new PropertyVetoException("don't close!", event);
           }
-        });
+          // end of if (event.getPropertyName().equals()
+        }
+      });
       desk.add(frame);
 
       //
-      // this frame has a workaround for a bug in Swing where setIconifiable does not fire any event
+      // this frame has a workaround for a bug in Swing where setIconifiable
+      // does not fire any event
       // until JDK1.4
       //
-      final JInternalFrame frame2 =
-        new JInternalFrame("An other Frame", true, true, true, true) {
-          /**
+      final JInternalFrame frame2 = new JInternalFrame("An other Frame", true, true, true, true)
+      {
+        /**
 			 * 
 			 */
-			private static final long serialVersionUID = -1970755312324208204L;
+        private static final long serialVersionUID = -1970755312324208204L;
 
-		public void setIconifiable(boolean b) {
-            if (OS.isOneDotFour()) {
-              super.setIconifiable(b);
-            }
-            else {
-              Boolean oldValue = isIconifiable() ? Boolean.TRUE : Boolean.FALSE;
-              Boolean newValue = b ? Boolean.TRUE : Boolean.FALSE;
-              super.setIconifiable(b);
-              this.firePropertyChange("iconable", oldValue, newValue);
-            }
+        public void setIconifiable(boolean b)
+        {
+          if (OS.isOneDotFour())
+          {
+            super.setIconifiable(b);
           }
-        };
+          else
+          {
+            Boolean oldValue = isIconifiable() ? Boolean.TRUE : Boolean.FALSE;
+            Boolean newValue = b ? Boolean.TRUE : Boolean.FALSE;
+            super.setIconifiable(b);
+            this.firePropertyChange("iconable", oldValue, newValue);
+          }
+        }
+      };
       frame2.getContentPane().setLayout(new GridLayout(3, 1));
 
       JButton button = new JButton("Toggle closable");
-      button.addActionListener(
-        new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            frame2.setClosable(!frame2.isClosable());
-          }
-        });
+      button.addActionListener(new ActionListener()
+      {
+        public void actionPerformed(ActionEvent event)
+        {
+          frame2.setClosable(!frame2.isClosable());
+        }
+      });
       frame2.getContentPane().add(button);
       button = new JButton("Toggle iconifiable");
-      button.addActionListener(
-        new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            frame2.setIconifiable(!frame2.isIconifiable());
-          }
-        });
+      button.addActionListener(new ActionListener()
+      {
+        public void actionPerformed(ActionEvent event)
+        {
+          frame2.setIconifiable(!frame2.isIconifiable());
+        }
+      });
       frame2.getContentPane().add(button);
 
       frame2.setMaximizable(false);
@@ -551,8 +581,7 @@ demoWelcome m_Welcome;
       frame2.setLocation(50, 50);
       desk.add(frame2);
 
-      JInternalFrame frame3 = new JInternalFrame("Not iconifiable",
-          true, true, true, false);
+      JInternalFrame frame3 = new JInternalFrame("Not iconifiable", true, true, true, false);
       frame3.setIconifiable(false);
       frame3.setSize(200, 200);
       frame3.setLocation(75, 75);
@@ -563,20 +592,22 @@ demoWelcome m_Welcome;
 
   /**
    * Description of the Class
-   *
-   * @author    fred
-   * @created   27 avril 2002
+   * 
+   * @author fred
+   * @created 27 avril 2002
    */
-  static class TextTest extends BasePanel {
+  static class TextTest extends BasePanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 8413708896747180633L;
+    private static final long serialVersionUID = 8413708896747180633L;
 
-	/**
+    /**
      * Constructor for the TextTest object
      */
-    TextTest() {
+    TextTest()
+    {
       setLayout(new VerticalLayout());
       add(new JLabel("This is a testbed for the key bindinds"));
       add(new JLabel("JTextField:"));
@@ -602,91 +633,103 @@ demoWelcome m_Welcome;
 
   /**
    * Description of the Class
-   *
-   * @author    fred
-   * @created   27 avril 2002
+   * 
+   * @author fred
+   * @created 27 avril 2002
    */
-  static class TablePanel extends BasePanel {
+  static class TablePanel extends BasePanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 4299974585941231563L;
+    private static final long serialVersionUID = 4299974585941231563L;
 
-	/**
+    /**
      * Constructor for the TablePanel object
      */
     @SuppressWarnings("unchecked")
-	TablePanel() {
+    TablePanel()
+    {
       setLayout(new BorderLayout());
-      JTable table = new JTable(
-        new AbstractTableModel() {
-          /**
+      JTable table = new JTable(new AbstractTableModel()
+      {
+        /**
 			 * 
 			 */
-			private static final long serialVersionUID = 557749960211808891L;
+        private static final long serialVersionUID = 557749960211808891L;
 
-		public int getRowCount() {
-            return 50000;
-          }
+        public int getRowCount()
+        {
+          return 50000;
+        }
 
-          public int getColumnCount() {
-            return 5;
-          }
+        public int getColumnCount()
+        {
+          return 5;
+        }
 
-          public Object getValueAt(int row, int column) {
-            if (column == 1) {
-              return new Integer((int)(((double)100 * row) / getRowCount()));
-            } else {
-              return new Integer(row * column);
-            }
+        public Object getValueAt(int row, int column)
+        {
+          if (column == 1)
+          {
+            return new Integer((int) (((double) 100 * row) / getRowCount()));
           }
-        });
+          else
+          {
+            return new Integer(row * column);
+          }
+        }
+      });
       add("Center", new JScrollPane(table));
 
-      
       table.getColumnModel().getColumn(1).setCellRenderer(new JProgressBarCellRenderer());
 
-      // here is an example of overriding the default table cellrenderer to provide a custom one while reusing
+      // here is an example of overriding the default table cellrenderer to
+      // provide a custom one while reusing
       // while reusing the skin tablecellrenderer
-      final Icon arrowIcon =
-        new Icon() {
-          public int getIconWidth() {
-            return 10;
-          }
+      final Icon arrowIcon = new Icon()
+      {
+        public int getIconWidth()
+        {
+          return 10;
+        }
 
-          public int getIconHeight() {
-            return 10;
-          }
+        public int getIconHeight()
+        {
+          return 10;
+        }
 
-          public void paintIcon(Component c, Graphics g, int x, int y) {
-            Color oldColor = g.getColor();
-            g.setColor(Color.black);
-            g.drawRect(x, y, 10, 10);
-            g.setColor(oldColor);
-          }
-        };
+        public void paintIcon(Component c, Graphics g, int x, int y)
+        {
+          Color oldColor = g.getColor();
+          g.setColor(Color.black);
+          g.drawRect(x, y, 10, 10);
+          g.setColor(oldColor);
+        }
+      };
 
-      TableCellRenderer headerRenderer =
-        new TableCellRenderer() {
-          @SuppressWarnings("deprecation")
-		public Component getTableCellRendererComponent(JTable table, Object value,
-              boolean isSelected, boolean hasFocus,
-              int row, int column) {
-            DefaultTableCellRenderer c =
-                (DefaultTableCellRenderer) SkinLookAndFeel.getSkin().getPersonality().createTableHeaderRenderer();
-            c.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if (column == 0) {
-              c.setForeground(Color.red);
-              c.setIcon(arrowIcon);
-            }
-            else {
-              c.setIcon(null);
-            }
-            return c;
+      TableCellRenderer headerRenderer = new TableCellRenderer()
+      {
+        @SuppressWarnings("deprecation")
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+        {
+          DefaultTableCellRenderer c = (DefaultTableCellRenderer) SkinLookAndFeel.getSkin().getPersonality().createTableHeaderRenderer();
+          c.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+          if (column == 0)
+          {
+            c.setForeground(Color.red);
+            c.setIcon(arrowIcon);
           }
-        };
+          else
+          {
+            c.setIcon(null);
+          }
+          return c;
+        }
+      };
       Enumeration enumeration = table.getColumnModel().getColumns();
-      while (enumeration.hasMoreElements()) {
+      while (enumeration.hasMoreElements())
+      {
         TableColumn aColumn = (TableColumn) enumeration.nextElement();
         aColumn.setHeaderRenderer(headerRenderer);
       }
@@ -697,96 +740,103 @@ demoWelcome m_Welcome;
 
   /**
    * Description of the Class
-   *
-   * @author    fred
-   * @created   27 avril 2002
+   * 
+   * @author fred
+   * @created 27 avril 2002
    */
-  static class ComboList extends BasePanel {
+  static class ComboList extends BasePanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -4164348950103783744L;
+    private static final long serialVersionUID = -4164348950103783744L;
 
-	/**
+    /**
      * Constructor for the ComboList object
      */
-    ComboList() {
+    ComboList()
+    {
       setLayout(new VerticalLayout());
       add(new JLabel("Normal ComboBox:"));
-      add(new JComboBox(new String[]{"1", "2", "4", "8"}));
-      JComboBox disabled = new JComboBox(new String[]{"1", "2", "4", "8"});
+      add(new JComboBox(new String[] { "1", "2", "4", "8" }));
+      JComboBox disabled = new JComboBox(new String[] { "1", "2", "4", "8" });
       disabled.setEnabled(false);
       add(new JLabel("Disabled ComboBox"));
       add(disabled);
       add(new JLabel("Editable ComboBox"));
-      final JComboBox editable = new JComboBox(new String[]{"1", "2", "4", "8"});
-      //	    editable.setEditable(true);
+      final JComboBox editable = new JComboBox(new String[] { "1", "2", "4", "8" });
+      // editable.setEditable(true);
       add(editable);
       JButton b = new JButton("Toggle Editable");
-      b.addActionListener(
-        new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            editable.setEditable(!editable.isEditable());
-          }
-        });
+      b.addActionListener(new ActionListener()
+      {
+        public void actionPerformed(ActionEvent event)
+        {
+          editable.setEditable(!editable.isEditable());
+        }
+      });
       add(b);
 
-      class FontCellRenderer extends DefaultListCellRenderer { 
+      class FontCellRenderer extends DefaultListCellRenderer
+      {
         /**
 		 * 
 		 */
-		private static final long serialVersionUID = 742791594489097148L;
+        private static final long serialVersionUID = 742791594489097148L;
 
-		public Component getListCellRendererComponent(JList list,
-                                                      Object value,
-                                                      int index,
-                                                      boolean isSelected,
-                                                      boolean cellHasFocus) {
-          String fontName = ((Font)value).getFontName(); 
-          return super.getListCellRendererComponent(list, fontName,
-                                                    index, isSelected,
-                                                    cellHasFocus);
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+        {
+          String fontName = ((Font) value).getFontName();
+          return super.getListCellRendererComponent(list, fontName, index, isSelected, cellHasFocus);
         }
-      };
+      }
+      ;
 
-      JComboBox fonts =
-        new JComboBox(GraphicsEnvironment.getLocalGraphicsEnvironment().
-                      getAllFonts()); 
+      JComboBox fonts = new JComboBox(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts());
       FontCellRenderer render = new FontCellRenderer();
       fonts.setOpaque(false);
-      fonts.setRenderer(render); 
+      fonts.setRenderer(render);
       add(fonts);
 
       // JDK1.4 only
-      try {
+      try
+      {
         add((JComponent) Class.forName("javax.swing.JSpinner").newInstance());
-      } catch (Exception e) {
       }
+      catch(Exception e)
+      {}
     }
   }
-  
-  static class ListPanel extends BasePanel {
+
+  static class ListPanel extends BasePanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 3369838045656010062L;
+    private static final long serialVersionUID = 3369838045656010062L;
 
-	ListPanel() {
+    ListPanel()
+    {
       setLayout(new BorderLayout());
-      
-      ListModel model = new AbstractListModel() {
-          /**
+
+      ListModel model = new AbstractListModel()
+      {
+        /**
 		 * 
 		 */
-		private static final long serialVersionUID = 1388814430103182278L;
-		public Object getElementAt(int index) {
-            return new Integer((int)(((double)100 * index) / getSize()));
-          }
-          public int getSize() {
-            return 10;
-          }
-        };
-      
+        private static final long serialVersionUID = 1388814430103182278L;
+
+        public Object getElementAt(int index)
+        {
+          return new Integer((int) (((double) 100 * index) / getSize()));
+        }
+
+        public int getSize()
+        {
+          return 10;
+        }
+      };
+
       JList list = new JList(model);
       list.setCellRenderer(new ListComponentRenderer());
       list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -797,20 +847,22 @@ demoWelcome m_Welcome;
     }
   }
 
-  static class ListComponentRenderer extends BasePanel implements ListCellRenderer {
+  static class ListComponentRenderer extends BasePanel implements
+      ListCellRenderer
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 5964360652826445923L;
-	JProgressBar progBar;
-    public ListComponentRenderer() {
+    private static final long serialVersionUID = 5964360652826445923L;
+    JProgressBar progBar;
+
+    public ListComponentRenderer()
+    {
       // Configure this
       setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-      setBorder( BorderFactory.createCompoundBorder(
-                                                    BorderFactory.createEtchedBorder(),
-                                                    BorderFactory.createEmptyBorder(2, 2, 2, 2)));
+      setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(2, 2, 2, 2)));
       setOpaque(true);
-      
+
       // Configure progBar
       progBar = new JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
       progBar.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -818,97 +870,116 @@ demoWelcome m_Welcome;
       progBar.setMinimumSize(new Dimension(100, 15));
       progBar.setMaximumSize(new Dimension(100, 15));
       progBar.setValue(0);
-      
+
       add(new JLabel("Fixed Size Label"));
       add(progBar);
     }
 
     /**
-     *   Comply with ListCellRenderer Interface
-     *   @param list the JList doing the renderering
-     *   @param value object being rendered
-     *   @param index cell index
-     *   @param isSelected is selected
-     *   @param cellHasFocus cell has focus?
-     *   @return Component to render
+     * Comply with ListCellRenderer Interface
+     * 
+     * @param list
+     *          the JList doing the renderering
+     * @param value
+     *          object being rendered
+     * @param index
+     *          cell index
+     * @param isSelected
+     *          is selected
+     * @param cellHasFocus
+     *          cell has focus?
+     * @return Component to render
      */
-    public Component getListCellRendererComponent(JList list, Object value, int index,
-                                                  boolean isSelected, boolean cellHasFocus) {
-      progBar.setValue(((Integer)value).intValue());
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+    {
+      progBar.setValue(((Integer) value).intValue());
       setBackground(isSelected ? Color.red : Color.white);
       setForeground(isSelected ? Color.white : Color.black);
       return this;
     }
   }
 
-  static class JProgressBarCellRenderer extends JProgressBar implements TableCellRenderer {
+  static class JProgressBarCellRenderer extends JProgressBar implements
+      TableCellRenderer
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = -31830878251445939L;
+    private static final long serialVersionUID = -31830878251445939L;
 
-	public JProgressBarCellRenderer() {
+    public JProgressBarCellRenderer()
+    {
       super();
       Dimension progressSize = new Dimension(50, 8);
       setMaximumSize(progressSize);
       setPreferredSize(progressSize);
       setMinimumSize(progressSize);
     }
-    
-    public Component getListCellRendererComponent(JList list, Object value, int index,
-                                                  boolean isSelected, boolean cellHasFocus) {
+
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+    {
       setBackground(list.getBackground());
       handleValue(value);
       return this;
     }
-    
-    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected,
-                                                  boolean expanded, boolean leaf, int row, boolean hasFocus) {
+
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus)
+    {
       setBackground(tree.getBackground());
       handleValue(value);
       return this;
     }
-    
-    public Component getTableCellRendererComponent(JTable table, Object value,
-                                                   boolean isSelected, boolean hasFocus,
-                                                   int row, int column) {
+
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+    {
       setBackground(table.getBackground());
       handleValue(value);
       return this;
     }
 
     /**
-     * Called by getListCellRendererComponent, getTreeCellRendererComponent, getTableCellRendererComponent to render the value.
-     * The default implementation checks the type of value and sets the model or the value correctly.
-     *
-     * @param value an <code>Object</code> value
+     * Called by getListCellRendererComponent, getTreeCellRendererComponent,
+     * getTableCellRendererComponent to render the value. The default
+     * implementation checks the type of value and sets the model or the value
+     * correctly.
+     * 
+     * @param value
+     *          an <code>Object</code> value
      */
-    protected void handleValue(Object value) {
-      if (value instanceof BoundedRangeModel) {
-        setModel((BoundedRangeModel)value);
-      } else {
-        setValue(((Integer)value).intValue());
+    protected void handleValue(Object value)
+    {
+      if (value instanceof BoundedRangeModel)
+      {
+        setModel((BoundedRangeModel) value);
+      }
+      else
+      {
+        setValue(((Integer) value).intValue());
       }
     }
   }
 
-  static class ChooserPanel extends BasePanel {
+  static class ChooserPanel extends BasePanel
+  {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 7659757757340531947L;
+    private static final long serialVersionUID = 7659757757340531947L;
 
-	public ChooserPanel() {
+    public ChooserPanel()
+    {
       setLayout(new GridLayout(3, 1));
 
       JButton button = new JButton("Pick a Color");
       add(button);
-      button.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent event) {
-            JColorChooser.showDialog(null, "Pick a Color", null);
-          }
-        });
+      button.addActionListener(new ActionListener()
+      {
+        public void actionPerformed(ActionEvent event)
+        {
+          JColorChooser.showDialog(null, "Pick a Color", null);
+        }
+      });
     }
   }
-    
+
 }

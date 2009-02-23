@@ -1,6 +1,5 @@
 package com.sunone;
 
-
 /*
  * ====================================================================
  * 
@@ -61,30 +60,33 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.MetalTheme;
 
 /**
- * Skin Look And Feel Demo. <BR>Provides information on how to use Skin Look
- * And Feel
+ * Skin Look And Feel Demo. <BR>
+ * Provides information on how to use Skin Look And Feel
  * 
  * @author fred @created 27 avril 2002
  */
-public class demo extends JApplet {
+public class demo extends JApplet
+{
 
   /**
 	 * 
 	 */
-	private static final long serialVersionUID = -2662666929425248259L;
+  private static final long serialVersionUID = -2662666929425248259L;
 
-/**
+  /**
    * Constructor for the demo object
    */
-  public demo() {
-  }
+  public demo()
+  {}
 
   /**
    * Description of the Method
    * 
-   * @param themes Description of Parameter
+   * @param themes
+   *          Description of Parameter
    */
-  public void createUI(String[] themes) {
+  public void createUI(String[] themes)
+  {
     getContentPane().setLayout(new BorderLayout(3, 3));
     getContentPane().add("Center", new demoPanel(themes));
   }
@@ -92,38 +94,49 @@ public class demo extends JApplet {
   /**
    * main method.
    * 
-   * @param args the list of theme packs available for this demo
-   * @exception Exception Description of Exception
+   * @param args
+   *          the list of theme packs available for this demo
+   * @exception Exception
+   *              Description of Exception
    */
-  public static void main(String[] args) throws Exception {
-	  args=new String[5];
-	  	  File ff=new File("C:\\Eclipse\\Workspace\\ProjetDev\\com\\sunone\\lookandfeel\\skinlf-1.2.12\\lib\\pat.in");
-		BufferedReader br1=new BufferedReader(new FileReader(ff));
-		String st=null;
-		int i=0;
-		while((st=br1.readLine())!=null){
-			args[i]=st;
-			i++;
-		} 
-		br1.close();
-		
-    if (args.length > 0) {
+  public static void main(String[] args) throws Exception
+  {
+    args = new String[5];
+    File ff = new File("C:\\Eclipse\\Workspace\\ProjetDev\\com\\sunone\\lookandfeel\\skinlf-1.2.12\\lib\\pat.in");
+    BufferedReader br1 = new BufferedReader(new FileReader(ff));
+    String st = null;
+    int i = 0;
+    while ((st = br1.readLine()) != null)
+    {
+      args[i] = st;
+      i++;
+    }
+    br1.close();
+
+    if (args.length > 0)
+    {
       String themepack = args[0];
-      if (themepack.endsWith(".xml")) {
-        SkinLookAndFeel.setSkin(
-          SkinLookAndFeel.loadThemePackDefinition(new File(args[0]).toURI().toURL()));
+      if (themepack.endsWith(".xml"))
+      {
+        SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePackDefinition(new File(args[0]).toURI().toURL()));
         UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
-      } else if (themepack.startsWith("class:")) {
+      }
+      else if (themepack.startsWith("class:"))
+      {
         String classname = themepack.substring("class:".length());
-        SkinLookAndFeel.setSkin((Skin)Class.forName(classname).newInstance());
+        SkinLookAndFeel.setSkin((Skin) Class.forName(classname).newInstance());
         UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
-      } else if (themepack.startsWith("theme:")) {
+      }
+      else if (themepack.startsWith("theme:"))
+      {
         String classname = themepack.substring("theme:".length());
-        MetalTheme theme = (MetalTheme)Class.forName(classname).newInstance();
+        MetalTheme theme = (MetalTheme) Class.forName(classname).newInstance();
         MetalLookAndFeel metal = new MetalLookAndFeel();
         MetalLookAndFeel.setCurrentTheme(theme);
         UIManager.setLookAndFeel(metal);
-      } else {
+      }
+      else
+      {
         SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(args[0]));
         UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
       }
@@ -133,22 +146,16 @@ public class demo extends JApplet {
     d.createUI(args);
 
     // if we are running with JDK1.4 decorates the frames and dialogs
-    if (OS.isOneDotFourOrMore()) {
-      java.lang.reflect.Method method =
-        JFrame.class.getMethod(
-          "setDefaultLookAndFeelDecorated",
-          new Class[] { boolean.class });
+    if (OS.isOneDotFourOrMore())
+    {
+      java.lang.reflect.Method method = JFrame.class.getMethod("setDefaultLookAndFeelDecorated", new Class[] { boolean.class });
       method.invoke(null, new Object[] { Boolean.TRUE });
 
-      method =
-        JDialog.class.getMethod(
-          "setDefaultLookAndFeelDecorated",
-          new Class[] { boolean.class });
+      method = JDialog.class.getMethod("setDefaultLookAndFeelDecorated", new Class[] { boolean.class });
       method.invoke(null, new Object[] { Boolean.TRUE });
     }
 
-    Image frameIcon =
-      new ImageIcon(demo.class.getResource("/com/sunone/windowicon.gif")).getImage();
+    Image frameIcon = new ImageIcon(demo.class.getResource("/com/sunone/windowicon.gif")).getImage();
     // so option pane as same icon as us
     JOptionPane.getRootFrame().setIconImage(frameIcon);
 
@@ -163,8 +170,10 @@ public class demo extends JApplet {
 
     f.setVisible(true);
 
-    f.addWindowListener(new WindowAdapter() {
-      public void windowClosing(WindowEvent event) {
+    f.addWindowListener(new WindowAdapter()
+    {
+      public void windowClosing(WindowEvent event)
+      {
         System.exit(0);
       }
     });
