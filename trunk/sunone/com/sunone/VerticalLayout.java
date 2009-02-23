@@ -55,53 +55,62 @@ import java.awt.LayoutManager;
 
 /**
  * Description of the Class
- *
- * @author    fred
- * @created   27 avril 2002
+ * 
+ * @author fred
+ * @created 27 avril 2002
  */
-public class VerticalLayout implements LayoutManager {
+public class VerticalLayout implements LayoutManager
+{
 
   int gap = 0;
 
   /**
    * Constructor for the VerticalLayout object
    */
-  public VerticalLayout() {
-  }
+  public VerticalLayout()
+  {}
 
   /**
    * Constructor for the VerticalLayout object
-   *
-   * @param gap  Description of Parameter
+   * 
+   * @param gap
+   *          Description of Parameter
    */
-  public VerticalLayout(int gap) {
+  public VerticalLayout(int gap)
+  {
     this.gap = gap;
   }
 
   /**
    * Adds a feature to the LayoutComponent attribute of the VerticalLayout
    * object
-   *
-   * @param name  The feature to be added to the LayoutComponent attribute
-   * @param c     The feature to be added to the LayoutComponent attribute
+   * 
+   * @param name
+   *          The feature to be added to the LayoutComponent attribute
+   * @param c
+   *          The feature to be added to the LayoutComponent attribute
    */
-  public void addLayoutComponent(String name, Component c) {
-  }
+  public void addLayoutComponent(String name, Component c)
+  {}
 
   /**
    * Description of the Method
-   *
-   * @param parent  Description of Parameter
+   * 
+   * @param parent
+   *          Description of Parameter
    */
-  public void layoutContainer(Container parent) {
+  public void layoutContainer(Container parent)
+  {
     Insets insets = parent.getInsets();
     Dimension size = parent.getSize();
     int width = size.width - insets.left - insets.right;
     int height = insets.top;
 
-    for (int i = 0, c = parent.getComponentCount(); i < c; i++) {
+    for (int i = 0, c = parent.getComponentCount(); i < c; i++)
+    {
       Component m = parent.getComponent(i);
-      if (m.isVisible()) {
+      if (m.isVisible())
+      {
         m.setBounds(insets.left, height, width, m.getPreferredSize().height);
         height += m.getSize().height + gap;
       }
@@ -110,27 +119,33 @@ public class VerticalLayout implements LayoutManager {
 
   /**
    * Description of the Method
-   *
-   * @param parent  Description of Parameter
-   * @return        Description of the Returned Value
+   * 
+   * @param parent
+   *          Description of Parameter
+   * @return Description of the Returned Value
    */
-  public Dimension minimumLayoutSize(Container parent) {
+  public Dimension minimumLayoutSize(Container parent)
+  {
     return preferredLayoutSize(parent);
   }
 
   /**
    * Description of the Method
-   *
-   * @param parent  Description of Parameter
-   * @return        Description of the Returned Value
+   * 
+   * @param parent
+   *          Description of Parameter
+   * @return Description of the Returned Value
    */
-  public Dimension preferredLayoutSize(Container parent) {
+  public Dimension preferredLayoutSize(Container parent)
+  {
     Insets insets = parent.getInsets();
     Dimension pref = new Dimension(0, 0);
 
-    for (int i = 0, c = parent.getComponentCount(); i < c; i++) {
+    for (int i = 0, c = parent.getComponentCount(); i < c; i++)
+    {
       Component m = parent.getComponent(i);
-      if (m.isVisible()) {
+      if (m.isVisible())
+      {
         pref.height += parent.getComponent(i).getPreferredSize().height + gap;
         pref.width = Math.max(pref.width, parent.getComponent(i).getPreferredSize().width);
       }
@@ -143,10 +158,11 @@ public class VerticalLayout implements LayoutManager {
 
   /**
    * Description of the Method
-   *
-   * @param c  Description of Parameter
+   * 
+   * @param c
+   *          Description of Parameter
    */
-  public void removeLayoutComponent(Component c) {
-  }
+  public void removeLayoutComponent(Component c)
+  {}
 
 }
