@@ -32,11 +32,13 @@ public class SunoneException extends Exception
 
   public String toString()
   {
-    String result = getMessage() + "\n" + getStackTrace();
+    StringBuilder result = new StringBuilder();
+
+    result.append(getMessage()).append("\n").append(getStackTrace());
     if (getCause() == null)
-      return result;
+      return result.toString();
     else
-      return result + "\n caused by " + getCause();
+      return result.append("\n").append("caused by ").append(getCause()).toString();
   }
 
 }
