@@ -3,9 +3,6 @@ package com.sunone;
 public class SunoneException extends Exception
 {
 
-  /**
-	 * 
-	 */
   private static final long serialVersionUID = -5580033577035735501L;
 
   public SunoneException()
